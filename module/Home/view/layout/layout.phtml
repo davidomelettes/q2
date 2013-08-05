@@ -18,17 +18,30 @@
 
     </head>
     <body>
-        <div class="navbar">
+        <div class="navbar navbar-static-top">
         	<a class="navbar-brand">Q2</a>
-        	<ul class="nav navbar-nav>
+        	<ul class="nav navbar-nav">
         		<li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
         	</ul>
         </div>
         <div class="container">
+        	<?php foreach ($this->flashMessenger('success') as $message): ?>
+        	<div class="alert alert-success">
+        		<button type="button" class="close" data-dismiss="alert">&times;</button>
+        		<strong>Alert!</strong> <?php echo $this->escapeHtml($message); ?>
+        	</div>
+        	<?php endforeach; ?>
+        	<?php foreach ($this->flashMessenger('error') as $message): ?>
+        	<div class="alert alert-danger">
+        		<button type="button" class="close" data-dismiss="alert">&times;</button>
+        		<strong>Alert!</strong> <?php echo $this->escapeHtml($message); ?>
+        	</div>
+        	<?php endforeach; ?>
+        
             <?php echo $this->content; ?>
             <hr>
             <footer>
-                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+                <p>&copy; 2005 - <?php echo date('Y') ?> by <a href="http://omelett.es">Omelett.es Ltd</a>. <?php echo $this->translate('All rights reserved.') ?></p>
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>

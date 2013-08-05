@@ -12,5 +12,13 @@
  */
 
 return array(
-    // ...
+    'db'				=> array(
+		'driver'			=> 'Pdo',
+		'dsn'				=> 'pgsql:host=localhost;port=5433;dbname=quantum2',
+	),
+	'service_manager'	=> array(
+		'factories'			=> array(
+			'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+		),
+	),
 );
