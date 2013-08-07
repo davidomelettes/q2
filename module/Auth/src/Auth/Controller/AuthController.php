@@ -68,7 +68,7 @@ class AuthController extends AbstractActionController
 				}
 				if ($result->isValid()) {
 					if ($request->getPost('rememberMe')) {
-						$this->getAuthStorage()->setRememberMe(1);
+						$this->getAuthStorage()->rememberMe();
 						// $this->getAuthService()->setStorage($this->getAuthStorage());
 					}
 					$this->getAuthService()->getStorage()->write($form->getData());

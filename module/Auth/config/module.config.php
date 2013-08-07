@@ -59,4 +59,9 @@ return array(
 			),
 		),
 	),
+	'view_helpers'	=> array(
+		'invokables'	=> array(
+			'userLogin'		=> 'Auth\View\Helper\UserLogin',
+		),
+	),
 );
