@@ -1,0 +1,21 @@
+<?php
+
+$form = $this->form;
+$form->setAttributes(array(
+	'action'	=> $this->url(),
+	'class'		=> 'form-horizontal',
+));
+$form->prepare();
+echo $this->form()->openTag($form);
+
+?>
+<?php foreach ($form as $element): ?>
+<?php echo $this->partial(
+		'partial/form/element.phtml',
+		array(
+			'element'		=> $element,
+			'leftColWidth'	=> 2,
+			'rightColWidth'	=> 4,
+		)); ?>
+<?php endforeach; ?>
+<?php echo $this->form()->closeTag($form); ?>
