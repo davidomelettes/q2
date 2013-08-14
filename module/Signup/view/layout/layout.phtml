@@ -21,28 +21,12 @@
         <div class="navbar navbar-static-top">
         	<a class="navbar-brand" href="/">Q2</a>
         	<ul class="nav navbar-nav">
-        		<li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
+        		<li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Plans') ?></a></li>
         		
         	</ul>
-        	<?php if ($this->userLogin()->hasIdentity()): ?>
-        	<a class="btn btn-primary navbar-btn pull-right" href="<?php echo $this->url('logout'); ?>">Log out</a>
-        	<?php else: ?>
         	<a class="btn btn-primary navbar-btn pull-right" href="<?php echo $this->url('login'); ?>">Sign in</a>
-        	<?php endif; ?>
         </div>
         <div class="container">
-        	<?php foreach ($this->flashMessenger('success') as $message): ?>
-        	<div class="alert alert-success">
-        		<button type="button" class="close" data-dismiss="alert">&times;</button>
-        		<strong>Alert!</strong> <?php echo $this->escapeHtml($message); ?>
-        	</div>
-        	<?php endforeach; ?>
-        	<?php foreach ($this->flashMessenger('error') as $message): ?>
-        	<div class="alert alert-danger">
-        		<button type="button" class="close" data-dismiss="alert">&times;</button>
-        		<strong>Alert!</strong> <?php echo $this->escapeHtml($message); ?>
-        	</div>
-        	<?php endforeach; ?>
         
             <?php echo $this->content; ?>
             <hr>

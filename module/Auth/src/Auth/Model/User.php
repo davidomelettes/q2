@@ -6,89 +6,44 @@ use Omelettes\Quantum\Model\AbstractModel;
 
 class User extends AbstractModel
 {
-	protected $password;
+	protected $fullName;
 	protected $rememberMe;
-	
-	public function getInputFilter()
-	{
-		$inputFilter = parent::getInputFilter();
-		$factory = $inputFilter->getFactory();
-		
-		/*
-		$inputFilter->add($factory->createInput(array(
-			'name'			=> 'name',
-			'required'		=> 'true',
-			'filters'		=> array(
-				array('name' => 'StripTags'),
-				array('name' => 'StringTrim'),
-			),
-			'validators'	=> array(
-				array(
-					'name'		=> 'StringLength',
-					'options'	=> array(
-						'encoding'	=> 'UTF-8',
-						'min'		=> 1,
-						'max'		=> 255,
-					),
-				),
-				array('name' => 'EmailAddress',),
-			),
-		)));
-		*/
-		
-		$inputFilter->add($factory->createInput(array(
-			'name'			=> 'password',
-			'required'		=> 'true',
-			'filters'		=> array(
-				array('name' => 'StringTrim'),
-			),
-			'validators'	=> array(
-				array(
-					'name'		=> 'StringLength',
-					'options'	=> array(
-						'encoding'	=> 'UTF-8',
-						'min'		=> 6,
-						'max'		=> 255,
-					),
-				),
-			),
-		)));
-		
-		$this->inputFilter = $inputFilter;
-		
-		return $this->inputFilter;
-	}
+	protected $admin;
 	
 	public function exchangeArray($data)
 	{
 		parent::exchangeArray($data);
-		$this->password = isset($data['password']) ? $data['password'] : null;
-		$this->rememberMe = isset($data['rememberMe']) ? $data['rememberMe'] : null;
+		$this->setFullName(isset($data['fullName']) ? $data['fullName'] : null);
+		$this->setRememberMe(isset($data['rememberMe']) ? $data['rememberMe'] : null);
+		$this->setAdmin(isset($data['rememberMe']) ? $data['rememberMe'] : null);
+		
+		return $this;
 	}
 	
 	public function getArrayCopy()
 	{
 		return array_merge(parent::getArrayCopy(), array(
-			'password'			=> $this->rememberMe,
-			'rememberMe'		=> $this->password,
+			'fullName'			=> $this->fullName,
+			'rememberMe'		=> $this->rememberMe,
+			'admin'				=> $this->admin,
 		));
 	}
 	
-	public function setPassword($password)
+	public function setFullName($name)
 	{
-		$this->password = $password;
-
+		$this->fullName = $name;
+		
 		return $this;
 	}
 	
-	public function getPassword()
+	public function getFullName()
 	{
-		return $this->password;
+		return $this->fullName;
 	}
 	
 	public function setRememberMe($rememberMe)
 	{
-		$this->rememberMe = $rememberMe;
+		$this->rememberMe = (boolean)$rememberMe;
 		
 		return $this;
 	}
@@ -98,5 +53,15 @@ class User extends AbstractModel
 		return $this->rememberMe;
 	}
 	
+	public function setAdmin($admin)
+	{
+		$this->admin = (boolean)$admin;
+		
+		return $this;
+	}
 	
+	public function getAdmin()
+	{
+		return $this->admin;
+	}
 }

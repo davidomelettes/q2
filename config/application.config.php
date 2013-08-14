@@ -4,8 +4,9 @@ return array(
     'modules' => array(
         //'Application',
     	'Omelettes',
-        'Home',
+    	'Signup',
     	'Auth',
+    	'Home',
     ),
 
     // These are various options for the listeners attached to the ModuleManager

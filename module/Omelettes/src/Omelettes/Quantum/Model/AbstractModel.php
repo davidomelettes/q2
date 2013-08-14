@@ -2,15 +2,8 @@
 
 namespace Omelettes\Quantum\Model;
 
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
-
-abstract class AbstractModel implements InputFilterAwareInterface
+abstract class AbstractModel
 {
-	protected $inputFilter;
-	
 	protected $key;
 	protected $name;
 	protected $created;
@@ -36,55 +29,12 @@ abstract class AbstractModel implements InputFilterAwareInterface
 		$this->$method($value);
 	}
 	
-	public function setInputFilter(InputFilterInterface $intputFilter)
-	{
-		throw new \Exception('Not used');
-	}
-	
-	public function getInputFilter()
-	{
-		if (!$this->inputFilter) {
-			$inputFilter = new InputFilter();
-			$factory = new InputFactory();
-
-			/*
-			$inputFilter->add($factory->createInput(array(
-				'name'			=> 'key',
-				//'validators'	=> array(
-					//array('name' => 'Omelettes\Quantum\Validator\Uuid\V4'),
-				//),
-			)));
-			*/
-			
-			$inputFilter->add($factory->createInput(array(
-				'name'			=> 'name',
-				'required'		=> 'true',
-				'filters'		=> array(
-					array('name' => 'StripTags'),
-					array('name' => 'StringTrim'),
-				),
-				'validators'	=> array(
-					array(
-						'name'		=> 'StringLength',
-						'options'	=> array(
-							'encoding'	=> 'UTF-8',
-							'min'		=> 1,
-							'max'		=> 255,
-						),
-					),
-				),
-			)));
-			
-			$this->inputFilter = $inputFilter;
-		}
-		
-		return $this->inputFilter;
-	}
-	
 	public function exchangeArray($data)
 	{
-		$this->key = isset($data['key']) ? $data['key'] : null;
-		$this->name = isset($data['name']) ? $data['name'] : null;
+		$this->setKey(isset($data['key']) ? $data['key'] : null);
+		$this->setName(isset($data['name']) ? $data['name'] : null);
+		
+		return $this;
 	}
 	
 	public function getArrayCopy()
@@ -97,7 +47,7 @@ abstract class AbstractModel implements InputFilterAwareInterface
 	
 	public function setKey($key)
 	{
-		$this->key = $key;
+		$this->key = (string)$key;
 		
 		return $this;
 	}

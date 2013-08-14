@@ -21,6 +21,9 @@ abstract class AbstractForm extends Form
 			'options'	=> array(
 				'label'		=> 'Name',
 			),
+			'attributes'=> array(
+				'id'		=> $this->getName() . 'Name',
+			),
 		));
 	}
 	

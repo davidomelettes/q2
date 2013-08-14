@@ -5,7 +5,13 @@ namespace Auth;
 use Zend\Authentication\Storage;
 use Zend\Authentication\AuthenticationService;
 use Zend\Authentication\Adapter\DbTable as DbTableAuthAdapter;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\TableGateway\Feature;
+use Auth\Form\UserFilter;
 use Auth\Model\AuthStorage;
+use Auth\Model\User;
+use Auth\Model\UsersMapper;
 
 class Module
 {
@@ -51,6 +57,21 @@ class Module
 					
 					return $authService;
 				},
+				'UsersTableGateway'			=> function($sm) {
+					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+					$resultSetPrototype = new ResultSet();
+					$resultSetPrototype->setArrayObjectPrototype(new User());
+					return new TableGateway('users', $dbAdapter, null, $resultSetPrototype);
+				},
+				'Auth\Model\UsersMapper'	=> function($sm) {
+					$gateway = $sm->get('UsersTableGateway');
+					$mapper = new UsersMapper($gateway);
+					return $mapper;
+				},
+				'Auth\Form\UserFilter'		=> function($sm) {
+					$filter = new UserFilter($sm->get('Auth\Model\UsersMapper'));
+					return $filter;
+				}
 			),
 		);
 	}

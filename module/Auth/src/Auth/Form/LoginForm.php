@@ -10,12 +10,15 @@ class LoginForm extends AbstractForm
 	{
 		parent::__construct('login');
 		
-		$this->get('name')->setLabel('Username');
+		$this->get('name')->setLabel('Email Address');
 		$this->add(array(
 			'name'		=> 'password',
 			'type'		=> 'Password',
 			'options'	=> array(
 				'label'		=> 'Password',
+			),
+			'attributes'=> array(
+				'id'		=> $this->getName() . 'Password',
 			),
 		));
 		$this->add(array(
