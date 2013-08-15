@@ -15,7 +15,7 @@ class User extends AbstractModel
 		parent::exchangeArray($data);
 		$this->setFullName(isset($data['fullName']) ? $data['fullName'] : null);
 		$this->setRememberMe(isset($data['rememberMe']) ? $data['rememberMe'] : null);
-		$this->setAdmin(isset($data['rememberMe']) ? $data['rememberMe'] : null);
+		$this->setAdmin(isset($data['admin']) ? $data['admin'] : null);
 		
 		return $this;
 	}

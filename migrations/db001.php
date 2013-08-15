@@ -18,8 +18,8 @@ $statement = "
 $statement = "
 	CREATE TABLE users (
 		key uuid NOT NULL default uuid_generate_v4(),
+		name varchar NOT NULL,
 		full_name varchar NOT NULL,
-		username varchar NOT NULL,
 		password_hash varchar NOT NULL,
 		salt varchar NOT NULL default uuid_generate_v4(),
 		enabled boolean NOT NULL default true,

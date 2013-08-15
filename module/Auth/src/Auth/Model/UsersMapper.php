@@ -4,7 +4,6 @@ namespace Auth\Model;
 
 use Omelettes\Quantum\Model\AbstractMapper;
 use Omelettes\Quantum\Uuid\V4 as Uuid;
-use Omelettes\Quantum\Validator\Uuid\V4 as UuidValidator;
 use Auth\Model\User;
 
 class UsersMapper extends AbstractMapper
@@ -16,26 +15,10 @@ class UsersMapper extends AbstractMapper
 		return $resultSet;
 	}
 	
-	public function find($key)
-	{
-		$validator = new UuidValidator();
-		if (!$validator->isValid($key)) {
-			return false;
-		}
-	
-		$rowset = $this->tableGateway->select(array('key' => $key));
-		$row = $rowset->current();
-		if (!$row) {
-			return false;
-		}
-		
-		return $row;
-	}
-	
 	public function saveUser(User $user)
 	{
 		$data = array(
-			'username'			=> $user->name,
+			'name'				=> $user->name,
 			'full_name'			=> $user->fullName,
 			'admin'				=> $user->admin ? 'true' : 'false',
 			'updated'			=> 'now()',

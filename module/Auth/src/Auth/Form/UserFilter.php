@@ -48,11 +48,12 @@ class UserFilter extends AbstractModelFilter
 						'name'		=> 'EmailAddress',
 					),
 					array(
-						'name'		=> 'Db\NoRecordExists',
+						'name'		=> 'Omelettes\Quantum\Validator\Model\DoesNotExist',
 						'options'	=> array(
 							'table'		=> 'users',
 							'field'		=> 'name',
-							'adapter'	=>
+							'mapper'	=> $this->usersMapper,
+							'method'	=> 'fetchByName',
 						),
 					),
 				),

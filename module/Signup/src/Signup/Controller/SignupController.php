@@ -3,6 +3,7 @@
 namespace Signup\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Auth\Form\UserFilter;
 use Auth\Model\User;
 use Signup\Form\SignupForm;
 
@@ -11,6 +12,7 @@ class SignupController extends AbstractActionController
 	protected $authService;
 	protected $signupForm;
 	protected $usersMapper;
+	protected $userFilter;
 	
 	public function getAuthService()
 	{
@@ -43,6 +45,16 @@ class SignupController extends AbstractActionController
 		return $this->usersMapper;
 	}
 	
+	public function getUserFilter()
+	{
+		if (!$this->userFilter) {
+			$userFilter = $this->getServiceLocator()->get('Auth\Form\UserFilter');
+			$this->userFilter = $userFilter;
+		}
+		
+		return $this->userFilter;
+	}
+	
 	public function signupAction()
 	{
 		$form = $this->getSignupForm();
@@ -52,7 +64,7 @@ class SignupController extends AbstractActionController
 		$form->bind($user);
 		
 		if ($request->isPost()) {
-			$form->setInputFilter($user->getInputFilter());
+			$form->setInputFilter($this->getUserFilter()->getInputFilter());
 			$form->setData($request->getPost());
 				
 			if ($form->isValid()) {

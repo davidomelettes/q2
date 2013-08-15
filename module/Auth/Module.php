@@ -46,7 +46,7 @@ class Module
 					$dbTableAuthAdapter = new DbTableAuthAdapter(
 						$dbAdapter,
 						'users',
-						'username',
+						'name',
 						'password_hash',
 						'sha256(?||salt)'
 					);
