@@ -1,6 +1,6 @@
 <div class="col-push-<?php echo $this->leftColWidth; ?> col-lg-<?php echo $this->rightColWidth; ?>">
 	<div class="checkbox">
-		<label class="">
+		<label for="<?php echo $element->getAttribute('id'); ?>">
 			<?php echo $this->formElement($element); ?> <?php echo $element->getLabel(); ?>
 		</label>
 	</div>

@@ -11,6 +11,7 @@ class AuthController extends AbstractActionController
 	protected $authService;
 	protected $authStorage;
 	protected $loginForm;
+	protected $loginFilter;
 	
 	public function getAuthService()
 	{
@@ -40,6 +41,16 @@ class AuthController extends AbstractActionController
 		return $this->loginForm;
 	}
 	
+	public function getLoginFilter()
+	{
+		if (!$this->loginFilter) {
+			$loginFilter = $this->getServiceLocator()->get('Auth\Form\LoginFilter');
+			$this->loginFilter = $loginFilter;
+		}
+	
+		return $this->loginFilter;
+	}
+	
 	public function loginAction()
 	{
 		if ($this->getAuthService()->hasIdentity()) {
@@ -54,7 +65,7 @@ class AuthController extends AbstractActionController
 		$form->bind($user);
 		
 		if ($request->isPost()) {
-			$form->setInputFilter($user->getInputFilter());
+			$form->setInputFilter($this->getLoginFilter()->getInputFilter());
 			$form->setData($request->getPost());
 			
 			if ($form->isValid()) {
@@ -78,6 +89,8 @@ class AuthController extends AbstractActionController
 				} else {
 					$this->flashMessenger()->addErrorMessage('Invalid login details');
 				}
+			} else {
+				var_dump('bad');
 			}
 		}
 		

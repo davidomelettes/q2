@@ -2,6 +2,8 @@
 
 namespace Signup;
 
+use Signup\Form\SignupFilter;
+
 class Module
 {
 	public function getAutoloaderConfig()
@@ -25,7 +27,14 @@ class Module
 	
 	public function getServiceConfig()
 	{
-		return array();
+		return array(
+			'factories' => array(
+				'Signup\Form\SignupFilter'		=> function($sm) {
+					$filter = new SignupFilter($sm->get('Auth\Model\UsersMapper'));
+					return $filter;
+				}
+			),
+		);
 	}
 	
 	public function onBootstrap($e)

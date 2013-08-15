@@ -1,11 +1,11 @@
 <?php
 
-namespace Auth\Form;
+namespace Signup\Form;
 
 use Omelettes\Quantum\Form\AbstractModelFilter;
 use Auth\Model\UsersMapper;
 
-class UserFilter extends AbstractModelFilter
+class SignupFilter extends AbstractModelFilter
 {
 	protected $usersMapper;
 	

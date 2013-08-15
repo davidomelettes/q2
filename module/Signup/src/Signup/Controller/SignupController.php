@@ -11,8 +11,8 @@ class SignupController extends AbstractActionController
 {
 	protected $authService;
 	protected $signupForm;
+	protected $signupFilter;
 	protected $usersMapper;
-	protected $userFilter;
 	
 	public function getAuthService()
 	{
@@ -45,14 +45,14 @@ class SignupController extends AbstractActionController
 		return $this->usersMapper;
 	}
 	
-	public function getUserFilter()
+	public function getSignupFilter()
 	{
-		if (!$this->userFilter) {
-			$userFilter = $this->getServiceLocator()->get('Auth\Form\UserFilter');
-			$this->userFilter = $userFilter;
+		if (!$this->signupFilter) {
+			$userFilter = $this->getServiceLocator()->get('Signup\Form\SignupFilter');
+			$this->signupFilter = $userFilter;
 		}
 		
-		return $this->userFilter;
+		return $this->signupFilter;
 	}
 	
 	public function signupAction()
@@ -64,7 +64,7 @@ class SignupController extends AbstractActionController
 		$form->bind($user);
 		
 		if ($request->isPost()) {
-			$form->setInputFilter($this->getUserFilter()->getInputFilter());
+			$form->setInputFilter($this->getSignupFilter()->getInputFilter());
 			$form->setData($request->getPost());
 				
 			if ($form->isValid()) {

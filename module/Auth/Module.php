@@ -8,7 +8,7 @@ use Zend\Authentication\Adapter\DbTable as DbTableAuthAdapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\TableGateway\Feature;
-use Auth\Form\UserFilter;
+use Auth\Form\LoginFilter;
 use Auth\Model\AuthStorage;
 use Auth\Model\User;
 use Auth\Model\UsersMapper;
@@ -68,8 +68,8 @@ class Module
 					$mapper = new UsersMapper($gateway);
 					return $mapper;
 				},
-				'Auth\Form\UserFilter'		=> function($sm) {
-					$filter = new UserFilter($sm->get('Auth\Model\UsersMapper'));
+				'Auth\Form\LoginFilter'		=> function($sm) {
+					$filter = new LoginFilter();
 					return $filter;
 				}
 			),

@@ -27,6 +27,9 @@ class LoginForm extends AbstractForm
 			'options'	=> array(
 				'label'		=> 'Keep me logged in?',
 			),
+			'attributes'=> array(
+				'id'		=> $this->getName() . 'RememberMe',
+			),
 		));
 		
 		$this->addSubmit('Login');
