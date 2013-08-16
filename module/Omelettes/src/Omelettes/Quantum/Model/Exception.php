@@ -2,9 +2,9 @@
 
 namespace Omelettes\Quantum\Model;
 
-use Omelettes\Quantum\Exception;
+use Omelettes\Quantum\Exception as QuantumException;
 
-class Exception extends Exception
+class Exception extends QuantumException
 {
 	
 }

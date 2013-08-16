@@ -22,7 +22,7 @@ class LoginForm extends AbstractForm
 			),
 		));
 		$this->add(array(
-			'name'		=> 'rememberMe',
+			'name'		=> 'remember_me',
 			'type'		=> 'Checkbox',
 			'options'	=> array(
 				'label'		=> 'Keep me logged in?',

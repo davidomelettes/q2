@@ -25,7 +25,8 @@ $statement = "
 		enabled boolean NOT NULL default true,
 		admin boolean NOT NULL deafult true,
 		created timestamp NOT NULL default now(),
-		updated timestamp NOT NULL default now()
+		updated timestamp NOT NULL default now(),
+		acl_role varchar NOT NULL default 'user'
 	);
 ";
 

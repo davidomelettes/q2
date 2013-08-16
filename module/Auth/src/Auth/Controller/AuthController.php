@@ -82,15 +82,14 @@ class AuthController extends AbstractActionController
 						$this->getAuthStorage()->rememberMe();
 						// $this->getAuthService()->setStorage($this->getAuthStorage());
 					}
-					$this->getAuthService()->getStorage()->write($form->getData());
+					$userIdentity = new User((array)$this->getAuthService()->getAdapter()->getResultRowObject());
+					$this->getAuthService()->getStorage()->write($userIdentity);
 					$this->flashMessenger()->addSuccessMessage('Login successful');
 					
 					return $this->redirect()->toRoute('home');
 				} else {
 					$this->flashMessenger()->addErrorMessage('Invalid login details');
 				}
-			} else {
-				var_dump('bad');
 			}
 		}
 		

@@ -11,6 +11,11 @@ abstract class AbstractModel
 	protected $createdBy;
 	protected $updatedBy;
 	
+	public function __construct($data = array())
+	{
+		$this->exchangeArray($data);
+	}
+	
 	public function __get($name)
 	{
 		$method = 'get' . $name;
@@ -42,6 +47,8 @@ abstract class AbstractModel
 		return array(
 			'key'		=> $this->key,
 			'name'		=> $this->name,
+			'created'	=> $this->created,
+			'updated'	=> $this->updated,
 		);
 	}
 	
@@ -68,4 +75,29 @@ abstract class AbstractModel
 	{
 		return $this->name;
 	}
+	
+	public function setCreated($ts)
+	{
+		$this->created = $ts;
+		
+		return $this;
+	}
+	
+	public function getCreated()
+	{
+		return $this->created;
+	}
+	
+	public function setUpdated($ts)
+	{
+		$this->updated = $ts;
+		
+		return $this;
+	}
+	
+	public function getUpdated()
+	{
+		return $this->updated;
+	}
+	
 }

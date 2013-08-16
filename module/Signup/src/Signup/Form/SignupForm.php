@@ -12,7 +12,7 @@ class SignupForm extends AbstractForm
 		
 		$this->get('name')->setLabel('Email Address');
 		$this->add(array(
-			'name'		=> 'fullName',
+			'name'		=> 'full_name',
 			'type'		=> 'Text',
 			'options'	=> array(
 				'label'		=> 'Full Name',

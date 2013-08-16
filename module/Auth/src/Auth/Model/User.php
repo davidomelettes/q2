@@ -7,15 +7,18 @@ use Omelettes\Quantum\Model\AbstractModel;
 class User extends AbstractModel
 {
 	protected $fullName;
-	protected $rememberMe;
 	protected $admin;
+	
+	protected $aclRole;
 	
 	public function exchangeArray($data)
 	{
 		parent::exchangeArray($data);
-		$this->setFullName(isset($data['fullName']) ? $data['fullName'] : null);
-		$this->setRememberMe(isset($data['rememberMe']) ? $data['rememberMe'] : null);
+		$this->setFullName(isset($data['full_name']) ? $data['full_name'] : null);
 		$this->setAdmin(isset($data['admin']) ? $data['admin'] : null);
+		$this->setAclRole(isset($data['acl_role']) ? $data['acl_role'] : null);
+		$this->setCreated(isset($data['created']) ? $data['created'] : null);
+		$this->setUpdated(isset($data['updated']) ? $data['updated'] : null);
 		
 		return $this;
 	}
@@ -23,9 +26,9 @@ class User extends AbstractModel
 	public function getArrayCopy()
 	{
 		return array_merge(parent::getArrayCopy(), array(
-			'fullName'			=> $this->fullName,
-			'rememberMe'		=> $this->rememberMe,
+			'full_name'			=> $this->fullName,
 			'admin'				=> $this->admin,
+			'acl_role'			=> $this->aclRole,
 		));
 	}
 	
@@ -41,18 +44,6 @@ class User extends AbstractModel
 		return $this->fullName;
 	}
 	
-	public function setRememberMe($rememberMe)
-	{
-		$this->rememberMe = (boolean)$rememberMe;
-		
-		return $this;
-	}
-	
-	public function getRememberMe()
-	{
-		return $this->rememberMe;
-	}
-	
 	public function setAdmin($admin)
 	{
 		$this->admin = (boolean)$admin;
@@ -64,4 +55,17 @@ class User extends AbstractModel
 	{
 		return $this->admin;
 	}
+	
+	public function setAclRole($role)
+	{
+		$this->aclRole = $role;
+		
+		return $this;
+	}
+	
+	public function getAclRole()
+	{
+		return $this->aclRole;
+	}
+	
 }

@@ -21,7 +21,7 @@ class SignupFilter extends AbstractModelFilter
 			$factory = $inputFilter->getFactory();
 			
 			$inputFilter->add($factory->createInput(array(
-				'name'			=> 'fullName',
+				'name'			=> 'full_name',
 				'required'		=> 'true',
 				'filters'		=> array(
 					array('name' => 'StringTrim'),
