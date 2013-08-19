@@ -3,12 +3,12 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle($this->translate('Quantum 2'))->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
         <!-- Styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
         <!-- Scripts -->
@@ -18,29 +18,36 @@
 
     </head>
     <body>
-        <div class="navbar navbar-static-top">
-        	<a class="navbar-brand" href="/">Q2</a>
-        	<ul class="nav navbar-nav">
-        		<li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-        		
-        	</ul>
+        <nav class="navbar navbar-static-top navbar-inverse" role="navigation">
+        	<div class="navbar-header">
+        		<a class="navbar-brand" href="/"><?php echo $this->translate('Quantum 2'); ?></a>
+        	</div>
+        	<?php echo $this->navigation('navigation')->menu()->setUlClass('nav navbar-nav'); ?>
+        	
         	<?php if ($this->userLogin()->hasIdentity()): ?>
-        	<a class="btn btn-primary navbar-btn pull-right" href="<?php echo $this->url('logout'); ?>">Log out</a>
+        	<ul class="nav navbar-nav navbar-right">
+        		<li class="dropdown">
+        			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->escapeHtml($this->userLogin()->getIdentity()->fullName); ?> <b class="caret"></b></a>
+        			<ul class="dropdown-menu">
+        				<li><a href="<?php echo $this->url('logout'); ?>"><?php echo $this->translate('Log out'); ?></a></li>
+        			</ul>
+        		</li>
+        	</ul>
         	<?php else: ?>
         	<a class="btn btn-primary navbar-btn pull-right" href="<?php echo $this->url('login'); ?>">Sign in</a>
         	<?php endif; ?>
-        </div>
+        </nav>
         <div class="container">
         	<?php foreach ($this->flashMessenger('success') as $message): ?>
         	<div class="alert alert-success">
         		<button type="button" class="close" data-dismiss="alert">&times;</button>
-        		<strong>Alert!</strong> <?php echo $this->escapeHtml($message); ?>
+        		<?php echo $this->escapeHtml($message); ?>
         	</div>
         	<?php endforeach; ?>
         	<?php foreach ($this->flashMessenger('error') as $message): ?>
         	<div class="alert alert-danger">
         		<button type="button" class="close" data-dismiss="alert">&times;</button>
-        		<strong>Alert!</strong> <?php echo $this->escapeHtml($message); ?>
+        		<?php echo $this->escapeHtml($message); ?>
         	</div>
         	<?php endforeach; ?>
         

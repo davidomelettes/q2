@@ -8,6 +8,8 @@ return array(
 	'user'		=> array(
 		'home',
 		'logout',
+		'admin',
+		'admin/default',
 	),
 	'system'	=> array(),
 );

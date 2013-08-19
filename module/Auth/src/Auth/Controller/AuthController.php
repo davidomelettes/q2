@@ -74,16 +74,12 @@ class AuthController extends AbstractActionController
 					->setCredential($form->getInputFilter()->getValue('password'));
 				
 				$result = $this->getAuthService()->authenticate();
-				foreach ($result->getMessages() as $message) {
-					$this->flashMessenger()->addErrorMessage($message);
-				}
 				if ($result->isValid()) {
 					if ($request->getPost('rememberMe')) {
 						$this->getAuthStorage()->rememberMe();
-						// $this->getAuthService()->setStorage($this->getAuthStorage());
 					}
 					$userIdentity = new User((array)$this->getAuthService()->getAdapter()->getResultRowObject());
-					$this->getAuthService()->getStorage()->write($userIdentity);
+					$this->getAuthStorage()->write($userIdentity);
 					$this->flashMessenger()->addSuccessMessage('Login successful');
 					
 					return $this->redirect()->toRoute('home');
