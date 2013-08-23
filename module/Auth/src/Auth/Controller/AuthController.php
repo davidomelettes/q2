@@ -2,14 +2,24 @@
 
 namespace Auth\Controller;
 
+use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Auth\Form\LoginForm;
+use Auth\Model\AuthStorage;
 use Auth\Model\User;
 
 class AuthController extends AbstractActionController
 {
+	/**
+	 * @var AuthenticationService
+	 */
 	protected $authService;
+	
+	/**
+	 * @var AuthStorage
+	 */
 	protected $authStorage;
+	
 	protected $loginForm;
 	protected $loginFilter;
 	
@@ -75,16 +85,15 @@ class AuthController extends AbstractActionController
 				
 				$result = $this->getAuthService()->authenticate();
 				if ($result->isValid()) {
-					if ($request->getPost('rememberMe')) {
+					if ($request->getPost('remember_me')) {
 						$this->getAuthStorage()->rememberMe();
 					}
 					$userIdentity = new User((array)$this->getAuthService()->getAdapter()->getResultRowObject());
 					$this->getAuthStorage()->write($userIdentity);
 					$this->flashMessenger()->addSuccessMessage('Login successful');
-					
 					return $this->redirect()->toRoute('home');
 				} else {
-					$this->flashMessenger()->addErrorMessage('Invalid login details');
+					$this->flashMessenger()->addErrorMessage('No user was found matching that email address and/or password');
 				}
 			}
 		}

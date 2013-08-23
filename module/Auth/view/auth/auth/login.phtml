@@ -1,3 +1,7 @@
-<?php
-
-echo $this->partial('partial/form/horizontal.phtml', array('form' => $this->form));
+<div class="row">
+	<div class="col-lg-4 col-lg-offset-4">
+		<h2><?php echo $this->translate('Sign in to'); ?> <?php echo $this->translate('Quantum 2'); ?></h2>
+		<?php echo $this->partial('partial/form/friendly.phtml', array('form' => $this->form)); ?>
+		<p>Don't have an account? <a href="<?php echo $this->url('signup'); ?>">Sign up for free today!</a></p>
+	</div>
+</div>

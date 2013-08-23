@@ -99,7 +99,21 @@ class Module
 	
 	public function onBootstrap(MvcEvent $e)
 	{
-		$e->getApplication()->getEventManager()->attach('route', array($this, 'checkAcl'));
+		$em = $e->getApplication()->getEventManager();
+		$em->attach('route', array($this, 'checkAcl'));
+		$em->attach('dispatch', array($this, 'setLayout'));
+	}
+	
+	public function setLayout($e)
+	{
+		$matches = $e->getRouteMatch();
+		$controller = $matches->getParam('controller');
+		if (false === strpos($controller, __NAMESPACE__)) {
+			return;
+		}
+	
+		$viewModel = $e->getViewModel();
+		$viewModel->setTemplate('layout/auth');
 	}
 	
 	public function checkAcl(MvcEvent $e)
@@ -110,6 +124,9 @@ class Module
 		$auth = $sm->get('AuthService');
 		$resource = $e->getRouteMatch()->getMatchedRouteName();
 		$role = $auth->hasIdentity() ? $auth->getIdentity()->aclRole : 'guest';
+		if (empty($role)) {
+			$role = 'guest';
+		}
 		
 		if (!$acl->hasResource($resource)) {
 			throw new \Exception('Undefined ACL resource: ' . $resource);

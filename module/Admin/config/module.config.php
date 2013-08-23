@@ -31,14 +31,15 @@ return array(
 	'router' => array(
 		'routes' => array(
 			'admin' => array(
-				'type'		=> 'Literal',
-				'options'	=> array(
+				'type'			=> 'Literal',
+				'options'		=> array(
 					'route'			=> '/admin',
 					'defaults'		=> array(
 						'controller'	=> 'index',
 						'action'		=> 'index',
 					),
 				),
+				'may_terminate'	=> true,
 				'child_routes'	=> array(
 					'default'		=> array(
 						'type'				=> 'Segment',

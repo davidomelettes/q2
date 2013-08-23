@@ -8,9 +8,14 @@ class SignupForm extends AbstractForm
 {
 	public function __construct($name = null)
 	{
-		parent::__construct('signup');
+		parent::__construct('form-signup');
 		
-		$this->get('name')->setLabel('Email Address');
+		$this->remove('key');
+		
+		$this->get('name')
+			->setLabel('Email Address')
+			->setAttribute('placeholder', 'Email Address');
+		
 		$this->add(array(
 			'name'		=> 'full_name',
 			'type'		=> 'Text',
@@ -20,6 +25,7 @@ class SignupForm extends AbstractForm
 			'attributes'=> array(
 				'id'			=> $this->getName() . 'FullName',
 				'autocomplete'	=> 'off',
+				'placeholder'	=> 'Full Name',
 			),
 		));
 		$this->add(array(
@@ -31,10 +37,11 @@ class SignupForm extends AbstractForm
 			'attributes'=> array(
 				'id'			=> $this->getName() . 'Password',
 				'autocomplete'	=> 'off',
+				'placeholder'	=> 'Password',
 			),
 		));
 		
-		$this->addSubmit('Sign Up');
+		$this->addSubmit('Sign up for free');
 	}
 	
 }

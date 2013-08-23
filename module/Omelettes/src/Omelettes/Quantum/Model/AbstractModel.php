@@ -20,7 +20,7 @@ abstract class AbstractModel
 	{
 		$method = 'get' . $name;
 		if (!method_exists($this, $method)) {
-			throw new Exception('Invalid model property: ' . $param);
+			throw new Exception('Invalid model property: ' . $name);
 		}
 		return $this->$method();
 	}

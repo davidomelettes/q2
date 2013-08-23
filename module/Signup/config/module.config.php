@@ -39,6 +39,18 @@ return array(
 						'action'		=> 'signup',
 					),
 				),
+				'may_terminate'	=> true,
+				'child_routes'	=> array(
+					'plan'		=> array(
+						'type'				=> 'Segment',
+						'options'			=> array(
+							'route'			=> '/for[/:plan]',
+							'constraints'	=> array(
+								'plan'		=> '[a-z][a-z0-9_-]*',
+							),
+						),
+					),
+				),
 			),
 		),
 	),

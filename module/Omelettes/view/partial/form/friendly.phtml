@@ -3,7 +3,7 @@
 $form = $this->form;
 $form->setAttributes(array(
 	'action'	=> $this->url(),
-	'class'		=> $form->getAttribute('name') . ' form-horizontal',
+	'class'		=> $form->getAttribute('name') . ' form-friendly',
 ));
 $form->prepare();
 echo $this->form()->openTag($form);
@@ -11,11 +11,9 @@ echo $this->form()->openTag($form);
 ?>
 <?php foreach ($form as $element): ?>
 <?php echo $this->partial(
-		'partial/form/element-horizontal.phtml',
+		'partial/form/element-friendly.phtml',
 		array(
 			'element'		=> $element,
-			'leftColWidth'	=> 2,
-			'rightColWidth'	=> 4,
 		)); ?>
 <?php endforeach; ?>
 <?php echo $this->form()->closeTag($form); ?>

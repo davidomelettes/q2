@@ -8,9 +8,14 @@ class LoginForm extends AbstractForm
 {
 	public function __construct($name = null)
 	{
-		parent::__construct('login');
+		parent::__construct('form-login');
 		
-		$this->get('name')->setLabel('Email Address');
+		$this->remove('key');
+		
+		$this->get('name')
+			->setLabel('Email Address')
+			->setAttribute('placeholder', 'Email Address');
+		
 		$this->add(array(
 			'name'		=> 'password',
 			'type'		=> 'Password',
@@ -18,21 +23,22 @@ class LoginForm extends AbstractForm
 				'label'		=> 'Password',
 			),
 			'attributes'=> array(
-				'id'		=> $this->getName() . 'Password',
+				'id'			=> $this->getName() . 'Password',
+				'placeholder'	=> 'Password',
 			),
 		));
 		$this->add(array(
 			'name'		=> 'remember_me',
 			'type'		=> 'Checkbox',
 			'options'	=> array(
-				'label'		=> 'Keep me logged in?',
+				'label'		=> 'Keep me signed in?',
 			),
 			'attributes'=> array(
 				'id'		=> $this->getName() . 'RememberMe',
 			),
 		));
 		
-		$this->addSubmit('Login');
+		$this->addSubmit('Sign in');
 	}
 	
 }

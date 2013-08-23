@@ -1,9 +1,9 @@
 <?php echo $this->doctype(); ?>
 
-<!-- Default layout -->
+<!-- Auth layout -->
 <html lang="en">
     <head>
-    	<?php echo $this->headTitle($this->translate('Quantum 2'))->setSeparator(' - ')->setAutoEscape(false) ?>
+       <?php echo $this->headTitle($this->translate('Quantum 2'))->setSeparator(' - ')->setAutoEscape(false) ?>
     	
     	<!-- Meta -->
         <?php
@@ -26,25 +26,9 @@
 
     </head>
     <body>
-        <nav class="navbar navbar-static-top navbar-inverse" role="navigation">
+    	<nav class="navbar navbar-static-top navbar-inverse" role="navigation">
         	<div class="navbar-header">
         		<a class="navbar-brand" href="/"><?php echo $this->translate('Quantum 2'); ?></a>
-        	</div>
-        	<?php echo $this->navigation('navigation')->menu()->setUlClass('nav navbar-nav'); ?>
-        	
-        	<div class="navbar-collapse">
-	        	<?php if ($this->userLogin()->hasIdentity()): ?>
-	        	<ul class="nav navbar-nav navbar-right">
-	        		<li class="dropdown">
-	        			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo $this->escapeHtml($this->userLogin()->getIdentity()->fullName); ?> <b class="caret"></b></a>
-	        			<ul class="dropdown-menu">
-	        				<li><a href="<?php echo $this->url('logout'); ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->translate('Log out'); ?></a></li>
-	        			</ul>
-	        		</li>
-	        	</ul>
-	        	<?php else: ?>
-	        	<a class="btn btn-primary navbar-btn pull-right" href="<?php echo $this->url('login'); ?>">Sign in</a>
-	        	<?php endif; ?>
         	</div>
         </nav>
         <div class="container">
@@ -60,8 +44,8 @@
         		<?php echo $this->escapeHtml($message); ?>
         	</div>
         	<?php endforeach; ?>
-        
-            <?php echo $this->content; ?>
+        	
+        	<?php echo $this->content; ?>
             <hr>
             <footer>
                 <p>&copy; 2005 - <?php echo date('Y') ?> by <a href="http://omelett.es">Omelett.es Ltd</a>. <?php echo $this->translate('All rights reserved.') ?></p>

@@ -29,6 +29,9 @@ return array(
 		'template_path_stack' => array(
 			__DIR__ . '/../view',
 		),
+		'template_map'				=> array(
+			'layout/auth'				=> __DIR__ . '/../view/layout/layout.phtml',
+		),
 	),
 	'controllers' => array(
 		'invokables' => array(

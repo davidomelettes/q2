@@ -16,6 +16,24 @@ return array(
 		'driver'			=> 'Pdo',
 		'dsn'				=> 'pgsql:host=localhost;port=5433;dbname=quantum2',
 	),
+	'session'			=> array(
+		'config'			=> array(
+			'class'				=> 'Zend\Session\Config\SessionConfig',
+			'options'			=> array(
+				//'name'					=> 'Omelettes',
+				'use_cookies'			=> true,
+				'cookie_httponly'		=> true,
+				'gc_maxlifetime'		=> 1209600,
+				'remember_me_seconds'	=> 1209600,
+			),
+		),
+		'storage'			=> 'Zend\Session\Storage\SessionArrayStorage',
+		'save_handler'		=> 'Omelettes\Quantum\Session\SaveHandler\DbTableGateway',
+		'validators'		=> array(
+			'Zend\Session\Validator\RemoteAddr',
+			'Zend\Session\Validator\HttpUserAgent',
+		),
+	),
 	'service_manager'	=> array(
 		'factories'			=> array(
 			'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',

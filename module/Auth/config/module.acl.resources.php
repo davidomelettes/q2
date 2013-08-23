@@ -3,6 +3,7 @@
 return array(
 	'guest'		=> array(
 		'signup',
+		'signup/plan',
 		'login',
 	),
 	'user'		=> array(

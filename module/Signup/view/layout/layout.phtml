@@ -1,15 +1,23 @@
 <?php echo $this->doctype(); ?>
 
+<!-- Signup layout -->
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
-
-        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+    	<?php echo $this->headTitle($this->translate('Quantum 2'))->setSeparator(' - ')->setAutoEscape(false) ?>
+    	
+    	<!-- Meta -->
+        <?php
+        	echo $this->headMeta()
+        		->setCharset('utf-8')
+        		->appendName('viewport', 'width=device-width, initial-scale=1.0');
+        ?>
 
         <!-- Styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+        <?php
+        	echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/favicon.ico'))
+        		->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+        		->appendStylesheet($this->basePath() . '/css/quantum.css')
+        ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
@@ -18,16 +26,15 @@
 
     </head>
     <body>
-        <div class="navbar navbar-static-top">
-        	<a class="navbar-brand" href="/">Q2</a>
-        	<ul class="nav navbar-nav">
-        		<li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Plans') ?></a></li>
-        		
-        	</ul>
-        	<a class="btn btn-primary navbar-btn pull-right" href="<?php echo $this->url('login'); ?>">Sign in</a>
-        </div>
+    	<nav class="navbar navbar-static-top navbar-inverse" role="navigation">
+        	<div class="navbar-header">
+        		<a class="navbar-brand" href="/"><?php echo $this->translate('Quantum 2'); ?></a>
+        	</div>
+        	<div class="navbar-collapse">
+        		<a class="btn btn-primary navbar-btn navbar-right" href="<?php echo $this->url('login'); ?>">Sign in</a>
+        	</div>
+        </nav>
         <div class="container">
-        
             <?php echo $this->content; ?>
             <hr>
             <footer>

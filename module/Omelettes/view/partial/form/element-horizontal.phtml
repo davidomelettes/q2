@@ -1,0 +1,10 @@
+<?php $element->setAttribute('class', 'form-control'); ?>
+<div class="form-group<?php if ($this->formElementErrors($element)) echo " has-error"; ?>">
+	<?php echo $this->partial(
+			'partial/form/element-horizontal/' . $element->getAttribute('type') . '.phtml',
+			array(
+				'element'		=> $element,
+				'leftColWidth'	=> $this->leftColWidth,
+				'rightColWidth'	=> $this->rightColWidth,
+			)); ?>
+</div>
