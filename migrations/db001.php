@@ -35,7 +35,7 @@ $statement = "
 		name varchar NOT NULL,
 		created timestamp NOT NULL default now(),
 		updated timestamp NOT NULL default now(),
-		PRIMARY KEY (key),
+		PRIMARY KEY (key)
 	);
 ";
 

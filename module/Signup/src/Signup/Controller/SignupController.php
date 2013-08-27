@@ -2,17 +2,41 @@
 
 namespace Signup\Controller;
 
+use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Auth\Form\UserFilter;
 use Auth\Model\User;
+use Auth\Model\UsersMapper;
+use Signup\Form\SignupFilter;
 use Signup\Form\SignupForm;
+use Signup\Model\AccountPlansMapper;
 
 class SignupController extends AbstractActionController
 {
+	/**
+	 * @var AuthenticationService
+	 */
 	protected $authService;
+	
+	/**
+	 * @var SignupForm
+	 */
 	protected $signupForm;
+	
+	/**
+	 * @var SignupFilter
+	 */
 	protected $signupFilter;
+	
+	/**
+	 * @var UsersMapper
+	 */
 	protected $usersMapper;
+	
+	/**
+	 * @var AccountPlansMapper
+	 */
+	protected $accountPlansMapper;
 	
 	public function getAuthService()
 	{
@@ -55,6 +79,16 @@ class SignupController extends AbstractActionController
 		return $this->signupFilter;
 	}
 	
+	public function getAccountPlansMapper()
+	{
+		if (!$this->accountPlansMapper) {
+			$mapper = $this->getServiceLocator()->get('Signup\Model\AccountPlansMapper');
+			$this->accountPlansMapper = $mapper;
+		}
+		
+		return $this->accountPlansMapper;
+	}
+	
 	public function signupAction()
 	{
 		$form = $this->getSignupForm();
@@ -80,4 +114,12 @@ class SignupController extends AbstractActionController
 			'form'      => $form,
 		);
 	}
+	
+	public function plansAction()
+	{
+		$plans = $this->getAccountPlansMapper()->fetchAll();
+		
+		return array();
+	}
+	
 }

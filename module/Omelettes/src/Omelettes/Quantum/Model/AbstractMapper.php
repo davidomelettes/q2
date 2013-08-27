@@ -40,7 +40,4 @@ abstract class AbstractMapper
 	
 	abstract public function fetchAll();
 	
-	
-	//abstract public function save();
-	
 }

@@ -2,7 +2,11 @@
 
 namespace Signup;
 
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
 use Signup\Form\SignupFilter;
+use Signup\Model\AccountPlan;
+use Signup\Model\AccountPlansMapper;
 
 class Module
 {
@@ -29,10 +33,21 @@ class Module
 	{
 		return array(
 			'factories' => array(
-				'Signup\Form\SignupFilter'		=> function($sm) {
+				'Signup\Form\SignupFilter'			=> function($sm) {
 					$filter = new SignupFilter($sm->get('Auth\Model\UsersMapper'));
 					return $filter;
-				}
+				},
+				'AccountPlansTableGateway'			=> function($sm) {
+					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+					$resultSetPrototype = new ResultSet();
+					$resultSetPrototype->setArrayObjectPrototype(new AccountPlan());
+					return new TableGateway('account_plans', $dbAdapter, null, $resultSetPrototype);
+				},
+				'Signup\Model\AccountPlansMapper'	=> function($sm) {
+					$gateway = $sm->get('AccountPlansTableGateway');
+					$mapper = new AccountPlansMapper($gateway);
+					return $mapper;
+				},
 			),
 		);
 	}

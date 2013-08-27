@@ -52,6 +52,28 @@ return array(
 					),
 				),
 			),
+			'plans' => array(
+				'type'		=> 'Zend\Mvc\Router\Http\Literal',
+				'options'	=> array(
+					'route'			=> '/plans',
+					'defaults'		=> array(
+						'controller'	=> 'Signup\Controller\Signup',
+						'action'		=> 'plans',
+					),
+				),
+				'may_terminate'	=> true,
+				'child_routes'	=> array(
+					'plan'		=> array(
+						'type'				=> 'Segment',
+						'options'			=> array(
+							'route'			=> '[/:plan]',
+							'constraints'	=> array(
+								'plan'		=> '[a-z][a-z0-9_-]*',
+							),
+						),
+					),
+				),
+			),
 		),
 	),
 	'view_helpers'	=> array(

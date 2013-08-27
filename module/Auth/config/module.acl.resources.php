@@ -2,15 +2,17 @@
 
 return array(
 	'guest'		=> array(
+		'login',
+		'plans',
+		'plans/plan',
 		'signup',
 		'signup/plan',
-		'login',
 	),
 	'user'		=> array(
-		'home',
-		'logout',
 		'admin',
 		'admin/default',
+		'home',
+		'logout',
 	),
 	'system'	=> array(),
 );
