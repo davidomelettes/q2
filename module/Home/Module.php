@@ -74,10 +74,11 @@ class Module
         	->appendStylesheet($basePath . '/css/quantum.css');
 		
 		$headScript = $viewHelperManager->get('headScript');
-		$headScript->prependFile($basePath . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-			->prependFile($basePath . '/js/bootstrap.min.js')
+		$headScript->prependFile($basePath . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',));
+		
+		$inlineScript = $viewHelperManager->get('inlineScript');
+		$inlineScript->prependFile($basePath . '/js/bootstrap.min.js')
 			->prependFile($basePath . '/js/jquery.min.js')
-			->appendFile($basePath . '/js/holder.js')
 			->appendFile($basePath . '/js/quantum.js');
 	}
 	

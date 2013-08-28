@@ -3,4 +3,12 @@
 .form-friendly .form-control { padding: 10px; font-size: 16px; line-height: 1.5; height: auto; }
 .form-friendly label.checkbox { padding-top: 5px; padding-bottom: 5px; }
 
-footer { opacity: 0.5; }
+#carousel-features { background-color: #777; }
+#carousel-features .item { height: 400px; }
+
+footer {
+	margin-top: 1em;
+	border-top: 1px solid #777;
+	padding-top: 1em;
+	opacity: 0.5;
+}

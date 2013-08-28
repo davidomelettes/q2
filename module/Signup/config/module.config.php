@@ -74,6 +74,46 @@ return array(
 					),
 				),
 			),
+			'about' => array(
+				'type'		=> 'Zend\Mvc\Router\Http\Literal',
+				'options'	=> array(
+					'route'			=> '/about',
+					'defaults'		=> array(
+						'controller'	=> 'Signup\Controller\Signup',
+						'action'		=> 'about',
+					),
+				),
+			),
+			'help' => array(
+				'type'		=> 'Zend\Mvc\Router\Http\Literal',
+				'options'	=> array(
+					'route'			=> '/help',
+					'defaults'		=> array(
+						'controller'	=> 'Signup\Controller\Signup',
+						'action'		=> 'help',
+					),
+				),
+			),
+			'terms' => array(
+				'type'		=> 'Zend\Mvc\Router\Http\Literal',
+				'options'	=> array(
+					'route'			=> '/terms',
+					'defaults'		=> array(
+						'controller'	=> 'Signup\Controller\Signup',
+						'action'		=> 'terms',
+					),
+				),
+			),
+			'privacy' => array(
+				'type'		=> 'Zend\Mvc\Router\Http\Literal',
+				'options'	=> array(
+					'route'			=> '/privacy',
+					'defaults'		=> array(
+						'controller'	=> 'Signup\Controller\Signup',
+						'action'		=> 'privacy',
+					),
+				),
+			),
 		),
 	),
 	'view_helpers'	=> array(
