@@ -10,6 +10,8 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Mvc\MvcEvent;
 use Zend\Permissions\Acl;
 use Auth\Form\LoginFilter;
+use Auth\Model\Account;
+use Auth\Model\AccountsMapper;
 use Auth\Model\AuthStorage;
 use Auth\Model\User;
 use Auth\Model\UsersMapper;
@@ -49,7 +51,7 @@ class Module
 						'users',
 						'name',
 						'password_hash',
-						'sha256(?||salt)'
+						"sha256(?||salt) AND acl_role = 'user'"
 					);
 					
 					$authService = new AuthenticationService();
@@ -57,6 +59,17 @@ class Module
 					$authService->setStorage($sm->get('Auth\Model\AuthStorage'));
 					
 					return $authService;
+				},
+				'AccountsTableGateway'			=> function($sm) {
+					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+					$resultSetPrototype = new ResultSet();
+					$resultSetPrototype->setArrayObjectPrototype(new Account());
+					return new TableGateway('accounts', $dbAdapter, null, $resultSetPrototype);
+				},
+				'Auth\Model\AccountsMapper'	=> function($sm) {
+					$gateway = $sm->get('AccountsTableGateway');
+					$mapper = new AccountsMapper($gateway);
+					return $mapper;
 				},
 				'UsersTableGateway'			=> function($sm) {
 					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');

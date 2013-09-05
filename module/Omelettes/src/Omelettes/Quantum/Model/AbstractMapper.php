@@ -3,16 +3,38 @@
 namespace Omelettes\Quantum\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Omelettes\Quantum\Model\AbstractModel;
 use Omelettes\Quantum\Validator\Uuid\V4 as UuidValidator;
 
-abstract class AbstractMapper
+abstract class AbstractMapper implements ServiceLocatorAwareInterface
 {
+	/**
+	 * @var TableGateway
+	 */
 	protected $tableGateway;
+	
+	/**
+	 * @var ServiceLocatorInterface
+	 */
+	protected $serviceLocator;
 	
 	public function __construct(TableGateway $tableGateway)
 	{
 		$this->tableGateway = $tableGateway;
+	}
+	
+	public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+	{
+		$this->serviceLocator = $serviceLocator;
+		
+		return $this;
+	}
+	
+	public function getServiceLocator()
+	{
+		return $this->serviceLocator;
 	}
 	
 	public function find($key)

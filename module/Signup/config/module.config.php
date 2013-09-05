@@ -9,6 +9,9 @@ return array(
 		'aliases' => array(
 			'translator' => 'MvcTranslator',
 		),
+		'factories' => array(
+			'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+		),
 	),
 	'view_manager' => array(
 		'display_not_found_reason'	=> true,
@@ -20,7 +23,8 @@ return array(
 			__DIR__ . '/../view',
 		),
 		'template_map'				=> array(
-			'layout/signup'				=> __DIR__ . '/../view/layout/layout.phtml',
+			'layout/front'				=> __DIR__ . '/../view/layout/front.phtml',
+			'layout/signup'				=> __DIR__ . '/../view/layout/signup.phtml',
 		),
 	),
 	'controllers' => array(
@@ -28,8 +32,42 @@ return array(
 			'Signup\Controller\Signup' => 'Signup\Controller\SignupController',
 		),
 	),
+	/*
+	'navigation' => array(
+		'default' => array(
+			array(
+				'label'		=> 'Tour',
+				'route'		=> 'tour',
+			),
+			array(
+				'label'		=> 'Pricing & Plans',
+				'route'		=> 'plans',
+			),
+		),
+	),
+	*/
 	'router' => array(
 		'routes' => array(
+			'front' => array(
+				'type'		=> 'Zend\Mvc\Router\Http\Literal',
+				'options'	=> array(
+					'route'			=> '/',
+					'defaults'		=> array(
+						'controller'	=> 'Signup\Controller\Signup',
+						'action'		=> 'front',
+					),
+				),
+			),
+			'tour' => array(
+				'type'		=> 'Zend\Mvc\Router\Http\Literal',
+				'options'	=> array(
+					'route'			=> '/tour',
+					'defaults'		=> array(
+						'controller'	=> 'Signup\Controller\Signup',
+						'action'		=> 'tour',
+					),
+				),
+			),
 			'signup' => array(
 				'type'		=> 'Zend\Mvc\Router\Http\Literal',
 				'options'	=> array(

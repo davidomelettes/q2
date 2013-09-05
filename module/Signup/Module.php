@@ -67,7 +67,9 @@ class Module
 		}
 		
 		$viewModel = $e->getViewModel();
-		$viewModel->setTemplate('layout/signup');
+		$action = $matches->getParam('action');
+		
+		$viewModel->setTemplate($action === 'signup' ? 'layout/signup' : 'layout/front');
 	}
 	
 }

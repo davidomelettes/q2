@@ -5,6 +5,8 @@ namespace Signup\Controller;
 use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Auth\Form\UserFilter;
+use Auth\Model\Account;
+use Auth\Model\AccountsMapper;
 use Auth\Model\User;
 use Auth\Model\UsersMapper;
 use Signup\Form\SignupFilter;
@@ -27,6 +29,11 @@ class SignupController extends AbstractActionController
 	 * @var SignupFilter
 	 */
 	protected $signupFilter;
+	
+	/**
+	 * @var AccountsMapper
+	 */
+	protected $accountsMapper;
 	
 	/**
 	 * @var UsersMapper
@@ -89,21 +96,79 @@ class SignupController extends AbstractActionController
 		return $this->accountPlansMapper;
 	}
 	
+	public function getAccountsMapper()
+	{
+		if (!$this->accountsMapper) {
+			$mapper = $this->getServiceLocator()->get('Auth\Model\AccountsMapper');
+			$this->accountsMapper = $mapper;
+		}
+		
+		return $this->accountsMapper;
+	}
+	
+	public function aboutAction()
+	{
+		return array();
+	}
+	
+	public function frontAction()
+	{
+		return array();
+	}
+	
+	public function termsAction()
+	{
+		return array();
+	}
+	
+	public function tourAction()
+	{
+		return array();
+	}
+	
+	public function plansAction()
+	{
+		$plans = $this->getAccountPlansMapper()->fetchAll();
+	
+		return array();
+	}
+	
+	public function privacyAction()
+	{
+		return array();
+	}
+	
 	public function signupAction()
 	{
+		// Check plan
+		$plans = $this->getAccountPlansMapper()->fetchByName($this->params('plans'));
+		if (count($plans) !== 1) {
+			$this->flashMessenger()->addErrorMessage('No plan was found with that name');
+			return $this->redirect()->toRoute('front');
+		}
+		$plan = $plans->current();
+		
 		$form = $this->getSignupForm();
 		
 		$request = $this->getRequest();
 		$user = new User();
 		$form->bind($user);
+		$account = new Account();
 		
 		if ($request->isPost()) {
 			$form->setInputFilter($this->getSignupFilter()->getInputFilter());
 			$form->setData($request->getPost());
 				
 			if ($form->isValid()) {
-				$this->getUsersMapper()->saveUser($user);
+				// Create account
+				$account->name = $user->name;
+				$account->accountPlan = $plan->key;
+				$this->getAccountsMapper()->createAccount($account);
+				// Create user
+				$this->getUsersMapper()->signupUser($user);
+				// Set user password
 				$this->getUsersMapper()->updateUserPassword($user, $request->getPost('password'));
+				// Log in
 				$this->getAuthService()->getStorage()->write($form->getData());
 				
 				return $this->redirect()->toRoute('home');
@@ -113,13 +178,6 @@ class SignupController extends AbstractActionController
 		return array(
 			'form'      => $form,
 		);
-	}
-	
-	public function plansAction()
-	{
-		$plans = $this->getAccountPlansMapper()->fetchAll();
-		
-		return array();
 	}
 	
 }

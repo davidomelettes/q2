@@ -1,5 +1,7 @@
 @CHARSET "UTF-8";
 
+.navbar .navbar-btn.navbar-right { margin-left: 15px; }
+
 .form-friendly .form-control { padding: 10px; font-size: 16px; line-height: 1.5; height: auto; }
 .form-friendly label.checkbox { padding-top: 5px; padding-bottom: 5px; }
 

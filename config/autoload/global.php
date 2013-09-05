@@ -39,4 +39,8 @@ return array(
 			'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
 		),
 	),
+	'keys'				=> array(
+		'SYSTEM_SYSTEM'		=> 'deadbeef-7a69-40e7-8984-8d3de3bedc0b',
+		'SYSTEM_SIGNUP'		=> 'feedface-ad3e-4cc6-bd9c-501224e24359',
+	),
 );

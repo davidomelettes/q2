@@ -1,0 +1,31 @@
+<?php echo $this->doctype(); ?>
+
+<!-- Signup layout -->
+<html lang="en">
+	<?php echo $this->partial('partial/signup-head.phtml'); ?>
+	
+	<body>
+		<nav class="navbar navbar-static-top navbar-inverse" role="navigation">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/"><?php echo $this->translate('Quantum 2'); ?></a>
+			</div>
+			<div class="navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="<?php echo $this->url('plans'); ?>"><?php echo $this->translate('Pricing &amp; Plans'); ?></a>
+					</li>
+				</ul>
+				<a class="btn btn-primary navbar-btn navbar-right" href="<?php echo $this->url('login'); ?>">Sign in</a>
+				<a class="btn btn-success navbar-btn navbar-right" href="<?php echo $this->url('signup/plan', array('plan'=>'free')); ?>">Sign up for free</a>
+			</div>
+		</nav>
+		
+		<?php echo $this->content; ?>
+
+		<?php echo $this->partial('partial/signup-footer.phtml'); ?>
+		
+		<!-- Document End Scripts -->
+		<?php echo $this->inlineScript(); ?>
+        
+    </body>
+</html>

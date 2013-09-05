@@ -15,13 +15,16 @@ class UsersMapper extends AbstractMapper
 		return $resultSet;
 	}
 	
-	public function saveUser(User $user)
+	public function signupUser(User $user)
 	{
+		$config = $this->getServiceLocator()->get('config');
 		$data = array(
 			'name'				=> $user->name,
+			'updated'			=> 'now()',
+			'created_by'		=> $config['keys']['SYSTEM_SIGNUP'],
+			'updated_by'		=> $config['keys']['SYSTEM_SIGNUP'],
 			'full_name'			=> $user->fullName,
 			'admin'				=> $user->admin ? 'true' : 'false',
-			'updated'			=> 'now()',
 		);
 		
 		$key = $user->key;

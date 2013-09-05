@@ -38,6 +38,10 @@ abstract class AbstractModel
 	{
 		$this->setKey(isset($data['key']) ? $data['key'] : null);
 		$this->setName(isset($data['name']) ? $data['name'] : null);
+		$this->setCreated(isset($data['created']) ? $data['created'] : null);
+		$this->setUpdated(isset($data['updated']) ? $data['updated'] : null);
+		$this->setCreatedBy(isset($data['created_by']) ? $data['created_by'] : null);
+		$this->setUpdatedBy(isset($data['updated_by']) ? $data['updated_by'] : null);
 		
 		return $this;
 	}
@@ -49,6 +53,8 @@ abstract class AbstractModel
 			'name'		=> $this->name,
 			'created'	=> $this->created,
 			'updated'	=> $this->updated,
+			'created_by'=> $this->createdBy,
+			'updated_by'=> $this->updatedBy,
 		);
 	}
 	
@@ -98,6 +104,30 @@ abstract class AbstractModel
 	public function getUpdated()
 	{
 		return $this->updated;
+	}
+	
+	public function setCreatedBy($key)
+	{
+		$this->createdBy = $key;
+	
+		return $this;
+	}
+	
+	public function getCreatedBy()
+	{
+		return $this->createdBy;
+	}
+	
+	public function setUpdatedBy($key)
+	{
+		$this->updatedBy = $key;
+	
+		return $this;
+	}
+	
+	public function getUpdatedBy()
+	{
+		return $this->updatedBy;
 	}
 	
 }

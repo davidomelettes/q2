@@ -17,8 +17,6 @@ class User extends AbstractModel
 		$this->setFullName(isset($data['full_name']) ? $data['full_name'] : null);
 		$this->setAdmin(isset($data['admin']) ? $data['admin'] : null);
 		$this->setAclRole(isset($data['acl_role']) ? $data['acl_role'] : null);
-		$this->setCreated(isset($data['created']) ? $data['created'] : null);
-		$this->setUpdated(isset($data['updated']) ? $data['updated'] : null);
 		
 		return $this;
 	}
