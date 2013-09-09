@@ -105,3 +105,7 @@ $statement = "
 		PRIMARY KEY (key)
 	);
 ";
+
+$statement = "
+	ALTER TABLE users ADD COLUMN account_key uuid REFERENCES accounts(key);
+";

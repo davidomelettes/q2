@@ -9,6 +9,11 @@ class User extends AbstractModel
 	protected $fullName;
 	protected $admin;
 	
+	/**
+	 * @var Account
+	 */
+	protected $account;
+	
 	protected $aclRole;
 	
 	public function exchangeArray($data)
@@ -17,6 +22,7 @@ class User extends AbstractModel
 		$this->setFullName(isset($data['full_name']) ? $data['full_name'] : null);
 		$this->setAdmin(isset($data['admin']) ? $data['admin'] : null);
 		$this->setAclRole(isset($data['acl_role']) ? $data['acl_role'] : null);
+		$this->setAccount(isset($data['account_key']) ? $data['account_key'] : null);
 		
 		return $this;
 	}
@@ -27,6 +33,7 @@ class User extends AbstractModel
 			'full_name'			=> $this->fullName,
 			'admin'				=> $this->admin,
 			'acl_role'			=> $this->aclRole,
+			'account_key'		=> $this->account,
 		));
 	}
 	
@@ -64,6 +71,18 @@ class User extends AbstractModel
 	public function getAclRole()
 	{
 		return $this->aclRole;
+	}
+	
+	public function setAccount($key)
+	{
+		$this->account = $key;
+	
+		return $this;
+	}
+	
+	public function getAccount()
+	{
+		return $this->account;
 	}
 	
 }

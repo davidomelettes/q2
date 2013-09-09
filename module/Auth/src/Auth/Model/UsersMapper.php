@@ -25,6 +25,7 @@ class UsersMapper extends AbstractMapper
 			'updated_by'		=> $config['keys']['SYSTEM_SIGNUP'],
 			'full_name'			=> $user->fullName,
 			'admin'				=> $user->admin ? 'true' : 'false',
+			'account_key'		=> $user->account,
 		);
 		
 		$key = $user->key;

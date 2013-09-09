@@ -5,7 +5,7 @@
 .form-friendly .form-control { padding: 10px; font-size: 16px; line-height: 1.5; height: auto; }
 .form-friendly label.checkbox { padding-top: 5px; padding-bottom: 5px; }
 
-#carousel-features { background-color: #777; }
+#carousel-features { background-color: #777; margin-top: -20px; }
 #carousel-features .item { height: 400px; }
 
 footer {

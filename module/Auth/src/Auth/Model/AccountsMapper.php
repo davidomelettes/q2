@@ -25,7 +25,6 @@ class AccountsMapper extends AbstractMapper
 			'updated_by'		=> $config['keys']['SYSTEM_SIGNUP'],
 			'account_plan_key'	=> $account->accountPlan,
 		);
-		//var_dump($data);die();
 		
 		$key = $account->key;
 		if (empty($key)) {

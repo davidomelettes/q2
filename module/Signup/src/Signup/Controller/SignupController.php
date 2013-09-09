@@ -165,6 +165,7 @@ class SignupController extends AbstractActionController
 				$account->accountPlan = $plan->key;
 				$this->getAccountsMapper()->createAccount($account);
 				// Create user
+				$user->account = $account->key;
 				$this->getUsersMapper()->signupUser($user);
 				// Set user password
 				$this->getUsersMapper()->updateUserPassword($user, $request->getPost('password'));

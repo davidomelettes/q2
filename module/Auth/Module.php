@@ -140,6 +140,9 @@ class Module
 		if (empty($role)) {
 			$role = 'guest';
 		}
+		if ($resource = 'login') {
+			return;
+		}
 		
 		if (!$acl->hasResource($resource)) {
 			throw new \Exception('Undefined ACL resource: ' . $resource);
