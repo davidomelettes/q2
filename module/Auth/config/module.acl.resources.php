@@ -19,6 +19,7 @@ return array(
 		'admin/default',
 		'home',
 		'logout',
+		'preferences',
 	),
 	'system'	=> array(),
 );

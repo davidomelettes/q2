@@ -7,6 +7,7 @@ return array(
     	'Signup',
     	'Auth',
     	'Home',
+    	'User',
     	'Admin',
     ),
 
