@@ -24,7 +24,8 @@ class UsersMapper extends AbstractMapper
 			'created_by'		=> $config['keys']['SYSTEM_SIGNUP'],
 			'updated_by'		=> $config['keys']['SYSTEM_SIGNUP'],
 			'full_name'			=> $user->fullName,
-			'admin'				=> $user->admin ? 'true' : 'false',
+			'admin'				=> 'true',
+			'acl_role'			=> 'user',
 			'account_key'		=> $user->account,
 		);
 		
@@ -34,7 +35,9 @@ class UsersMapper extends AbstractMapper
 			$data['salt'] = new Uuid();
 			$data['password_hash'] = hash('sha256', $data['salt']);
 			$this->tableGateway->insert($data);
-			$user->key = $data['key'];
+			
+			// Load model with new values
+			$user->exchangeArray($data);
 		} else {
 			if (!$this->find($key)) {
 				throw new \Exception('User with key ' . $key . ' does not exist');

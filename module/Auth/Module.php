@@ -140,7 +140,7 @@ class Module
 		if (empty($role)) {
 			$role = 'guest';
 		}
-		if ($resource = 'login') {
+		if ($resource === 'login') {
 			return;
 		}
 		
