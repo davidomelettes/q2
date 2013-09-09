@@ -43,7 +43,7 @@ return array(
 			'login' => array(
 				'type'		=> 'Zend\Mvc\Router\Http\Literal',
 				'options'	=> array(
-					'route'			=> '/login',
+					'route'			=> '/sign-in',
 					'defaults'		=> array(
 						'controller'	=> 'Auth\Controller\Auth',
 						'action'		=> 'login',
@@ -53,7 +53,7 @@ return array(
 			'logout' => array(
 				'type'		=> 'Zend\Mvc\Router\Http\Literal',
 				'options'	=> array(
-					'route'			=> '/logout',
+					'route'			=> '/sign-out',
 					'defaults'		=> array(
 						'controller'	=> 'Auth\Controller\Auth',
 						'action'		=> 'logout',

@@ -109,3 +109,29 @@ $statement = "
 $statement = "
 	ALTER TABLE users ADD COLUMN account_key uuid REFERENCES accounts(key);
 ";
+
+$statement = "
+	CREATE TABLE user_preference_defaults (
+		name varchar PRIMARY KEY,
+		type varchar NOT NULL DEFAULT 'varchar',
+		default_varchar varchar,
+		default_boolean boolean,
+		default_timestamp timestamp,
+		default_integer int,
+		default_uuid uuid
+	);
+";
+
+$statement = "
+	CREATE TABLE user_preferences (
+		user_key NOT NULL REFERENCES users(key),
+		name varchar NOT NULL,
+		type varchar NOT NULL DEFAULT 'varchar',
+		value_varchar varchar,
+		value_boolean boolean,
+		value_timestamp timestamp,
+		value_integer int,
+		value_uuid uuid,
+		PRIMARY KEY (user_key, name)
+	);
+";

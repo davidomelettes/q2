@@ -23,4 +23,9 @@ class UserPreferencesController extends AbstractActionController
 		return array();
 	}
 	
+	public function changePasswordAction()
+	{
+		
+	}
+	
 }

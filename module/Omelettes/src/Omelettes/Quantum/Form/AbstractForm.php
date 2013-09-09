@@ -10,24 +10,35 @@ abstract class AbstractForm extends Form
 	{
 		parent::__construct($name);
 		$this->setAttribute('method', 'post');
-		
+	}
+	
+	public function addKeyElement()
+	{
 		$this->add(array(
 			'name'		=> 'key',
 			'type'		=> 'Hidden',
 		));
+		
+		return $this;
+	}
+	
+	public function addNameElement($label = 'Name')
+	{
 		$this->add(array(
 			'name'		=> 'name',
 			'type'		=> 'Text',
 			'options'	=> array(
-				'label'		=> 'Name',
+				'label'		=> $label,
 			),
 			'attributes'=> array(
 				'id'		=> $this->getName() . 'Name',
 			),
 		));
+		
+		return $this;
 	}
 	
-	public function addSubmit($buttonText = 'Save')
+	public function addSubmitElement($buttonText = 'Save')
 	{
 		$this->add(array(
 			'name'		=> 'submit',

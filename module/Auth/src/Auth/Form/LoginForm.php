@@ -6,15 +6,12 @@ use Omelettes\Quantum\Form\AbstractForm;
 
 class LoginForm extends AbstractForm
 {
-	public function __construct($name = null)
+	public function __construct()
 	{
 		parent::__construct('form-login');
 		
-		$this->remove('key');
-		
-		$this->get('name')
-			->setLabel('Email Address')
-			->setAttribute('placeholder', 'Email Address');
+		$this->addNameElement('Email Address');
+		$this->get('name')->setAttribute('placeholder', 'Email Address');
 		
 		$this->add(array(
 			'name'		=> 'password',
@@ -38,7 +35,7 @@ class LoginForm extends AbstractForm
 			),
 		));
 		
-		$this->addSubmit('Sign in');
+		$this->addSubmitElement('Sign in');
 	}
 	
 }

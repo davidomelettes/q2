@@ -10,11 +10,8 @@ class SignupForm extends AbstractForm
 	{
 		parent::__construct('form-signup');
 		
-		$this->remove('key');
-		
-		$this->get('name')
-			->setLabel('Email Address')
-			->setAttribute('placeholder', 'Email Address');
+		$this->addNameElement('Email Address');
+		$this->get('name')->setAttribute('placeholder', 'Email Address');
 		
 		$this->add(array(
 			'name'		=> 'full_name',
@@ -41,7 +38,7 @@ class SignupForm extends AbstractForm
 			),
 		));
 		
-		$this->addSubmit('Sign up for free');
+		$this->addSubmitElement('Sign up for free');
 	}
 	
 }
