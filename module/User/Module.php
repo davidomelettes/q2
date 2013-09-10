@@ -2,6 +2,8 @@
 
 namespace User;
 
+use User\Form\ChangePasswordFilter;
+
 class Module
 {
 	public function getAutoloaderConfig()
@@ -27,6 +29,11 @@ class Module
 	{
 		return array(
 			'factories'		=> array(
+				'User\Form\ChangePasswordFilter' => function ($sm) {
+					$filter = new ChangePasswordFilter($sm->get('AuthService'));
+					
+					return $filter;
+				},
 			),
 		);
 	}

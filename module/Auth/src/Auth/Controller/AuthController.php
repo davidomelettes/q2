@@ -7,6 +7,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Auth\Form\LoginForm;
 use Auth\Model\AuthStorage;
 use Auth\Model\User;
+use Auth\Form\LoginFilter;
 
 class AuthController extends AbstractActionController
 {
@@ -20,7 +21,14 @@ class AuthController extends AbstractActionController
 	 */
 	protected $authStorage;
 	
+	/**
+	 * @var LoginForm
+	 */
 	protected $loginForm;
+	
+	/**
+	 * @var LoginFilter
+	 */
 	protected $loginFilter;
 	
 	public function getAuthService()
@@ -109,7 +117,7 @@ class AuthController extends AbstractActionController
 		$this->getAuthService()->clearIdentity();
 		 
 		$this->flashMessenger()->addSuccessMessage('Goodbye');
-		return $this->redirect()->toRoute('login');
+		return $this->redirect()->toRoute('sign-in');
 	}
 	
 }
