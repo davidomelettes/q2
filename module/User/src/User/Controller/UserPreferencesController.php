@@ -2,17 +2,33 @@
 
 namespace User\Controller;
 
+use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
+use Auth\Model\UsersMapper;
 use User\Form\ChangePasswordForm;
 use User\Form\ChangePasswordFilter;
 
 class UserPreferencesController extends AbstractActionController
 {
+	/**
+	 * @var ChangePasswordForm
+	 */
 	protected $changePasswordForm;
 	
+	/**
+	 * @var ChangePasswordFilter
+	 */
 	protected $changePasswordFilter;
 	
+	/**
+	 * @var UsersMapper
+	 */
 	protected $usersMapper;
+	
+	/**
+	 * @var AuthenticationService
+	 */
+	protected $authService;
 	
 	public function getChangePasswordForm()
 	{
@@ -35,11 +51,21 @@ class UserPreferencesController extends AbstractActionController
 	public function getUsersMapper()
 	{
 		if (!$this->usersMapper) {
-			$usersMapper = $this->getServiceLocator()->get('Admin\Model\UsersMapper');
+			$usersMapper = $this->getServiceLocator()->get('Auth\Model\UsersMapper');
 			$this->usersMapper = $usersMapper;
 		}
 	
 		return $this->usersMapper;
+	}
+	
+	public function getAuthService()
+	{
+		if (!$this->authService) {
+			$authService = $this->getServiceLocator()->get('AuthService');
+			$this->authService = $authService;
+		}
+		
+		return $this->authService;
 	}
 	
 	public function indexAction()
@@ -52,7 +78,8 @@ class UserPreferencesController extends AbstractActionController
 			$changePasswordForm->setInputFilter($this->getChangePasswordFilter()->getInputFilter());
 			$changePasswordForm->setData($request->getPost());
 			if ($changePasswordForm->isValid()) {
-		
+				$this->getUsersMapper()->updateUserPassword($this->getAuthService()->getIdentity(), $changePasswordForm->getInputFilter()->getValue('password_new'));
+				$this->flashMessenger()->addSuccessMessage('Your password has been updated');
 			}
 		}
 		
@@ -63,21 +90,7 @@ class UserPreferencesController extends AbstractActionController
 	
 	public function changePasswordAction()
 	{
-		$changePasswordForm = $this->getChangePasswordForm();
-		
-		$request = $this->getRequest();
-		
-		if ($request->isPost()) {
-			$changePasswordForm->setInputFilter($this->getChangePasswordFilter()->getInputFilter());
-			$changePasswordForm->setData($request->getPost());
-			if ($changePasswordForm->isValid()) {
-				
-			}
-		}
-		
-		return array(
-			'changePasswordForm'      => $changePasswordForm,
-		);
+		return array();
 	}
 	
 }

@@ -36,7 +36,7 @@
 	        				<li role="presentation" class="dropdown-header">Admin</li>
 	        				<li role="presentation"><a role="menuitem" href="<?php echo $this->url('admin'); ?>"><?php echo $this->translate('Account Settings'); ?></a></li>
 	        				<li role="presentation"><a role="menuitem" href="<?php echo $this->url('admin'); ?>"><?php echo $this->translate('Manage Subscription'); ?></a></li>
-	        				<li role="presentation"><a role="menuitem" href="<?php echo $this->url('admin'); ?>"><?php echo $this->translate('Manage Users'); ?></a></li>
+	        				<li role="presentation"><a role="menuitem" href="<?php echo $this->url('admin/default', array('controller'=>'users')); ?>"><?php echo $this->translate('Manage Users'); ?></a></li>
 	        				<li role="presentation" class="divider"></li>
 	        				<?php endif; ?>
 	        				<li role="presentation"><a role="menuitem" href="<?php echo $this->url('help'); ?>"><?php echo $this->translate('Help'); ?></a></li>
@@ -52,13 +52,22 @@
         	</div>
         </nav>
         <div class="container">
-        	<?php foreach ($this->flashMessenger('success') as $message): ?>
+        	<?php
+        		$fm = $this->flashMessenger()->getPluginFlashMessenger();
+        		$fm->setNamespace('success');
+        		$successMessages = array_merge($fm->getMessages(), $fm->getCurrentMessages());
+        		$fm->clearCurrentMessages();
+        		$fm->setNamespace('error');
+        		$errorMessages = array_merge($fm->getMessages(), $fm->getCurrentMessages());
+        		$fm->clearCurrentMessages();
+        	?>
+        		<?php foreach ($successMessages as $message): ?>
         	<div class="alert alert-success">
         		<button type="button" class="close" data-dismiss="alert">&times;</button>
         		<?php echo $this->escapeHtml($message); ?>
         	</div>
         	<?php endforeach; ?>
-        	<?php foreach ($this->flashMessenger('error') as $message): ?>
+        	<?php foreach ($errorMessages as $message): ?>
         	<div class="alert alert-danger">
         		<button type="button" class="close" data-dismiss="alert">&times;</button>
         		<?php echo $this->escapeHtml($message); ?>

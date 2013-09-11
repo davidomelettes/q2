@@ -117,7 +117,7 @@ class AuthController extends AbstractActionController
 		$this->getAuthService()->clearIdentity();
 		 
 		$this->flashMessenger()->addSuccessMessage('Goodbye');
-		return $this->redirect()->toRoute('sign-in');
+		return $this->redirect()->toRoute('login');
 	}
 	
 }

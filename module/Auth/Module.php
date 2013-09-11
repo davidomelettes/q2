@@ -149,8 +149,9 @@ class Module
 		}
 		if (!$acl->isAllowed($role, $resource)) {
 			// Redirect to login page
+			$loginUrl = $e->getRouter()->assemble(array(), array('name'=>'login'));
 			$response = $e->getResponse();
-			$response->getHeaders()->addHeaderLine('Location', $e->getRequest()->getBaseUrl() . '/login');
+			$response->getHeaders()->addHeaderLine('Location', $e->getRequest()->getBaseUrl() . $loginUrl);
 			$response->setStatusCode('302');
 		}
 	}
