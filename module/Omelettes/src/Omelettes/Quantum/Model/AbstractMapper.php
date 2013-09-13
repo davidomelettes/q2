@@ -5,6 +5,7 @@ namespace Omelettes\Quantum\Model;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Validator\StringLength;
 use Omelettes\Quantum\Model\AbstractModel;
 use Omelettes\Quantum\Validator\Uuid\V4 as UuidValidator;
 
@@ -28,8 +29,6 @@ abstract class AbstractMapper implements ServiceLocatorAwareInterface
 	public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
 	{
 		$this->serviceLocator = $serviceLocator;
-		
-		return $this;
 	}
 	
 	public function getServiceLocator()
@@ -46,6 +45,25 @@ abstract class AbstractMapper implements ServiceLocatorAwareInterface
 		
 		$rowset = $this->tableGateway->select(array('key' => $key));
 		$row = $rowset->current();
+		if (!$row) {
+			return false;
+		}
+		
+		return $row;
+	}
+	
+	public function findByName($name)
+	{
+		$validator = new StringLength(array('min' => 1, 'encoding' => 'UTF-8'));
+		if (!$validator->isValid($name)) {
+			return false;
+		}
+		
+		$resultSet = $this->tableGateway->select(array('name' => $name));
+		if (count($resultSet) > 1) {
+			throw new \Exception('Expected no more than 1 result');
+		}
+		$row = $resultSet->current();
 		if (!$row) {
 			return false;
 		}

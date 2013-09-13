@@ -9,6 +9,7 @@ use Zend\Session\Container;
 use Zend\Session\SaveHandler\DbTableGatewayOptions;
 use Zend\Session\SessionManager;
 use Omelettes\Quantum\Session\SaveHandler\DbTableGateway as SessionSaveHandlerDb;
+use Omelettes\Quantum\Mailer;
 
 class Module
 {
@@ -34,6 +35,9 @@ class Module
 	public function getServiceConfig()
 	{
 		return array(
+			'aliases'		=> array(
+				'Mailer'		=> 'Omelettes\Quantum\Mailer',
+			),
 			'factories'		=> array(
 				'SessionsTableGateway'			=> function($sm) {
 					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
@@ -50,6 +54,10 @@ class Module
 						throw new \Exception('Missing session config');
 					}
 					return $sessionSaveHandler;
+				},
+				'Omelettes\Quantum\Mailer'		=> function ($sm) {
+					$mailer = new Mailer();
+					return $mailer;
 				},
 				'Zend\Session\SessionManager'	=> function ($sm) {
 					$config = $sm->get('config');

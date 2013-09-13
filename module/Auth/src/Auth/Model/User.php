@@ -6,8 +6,12 @@ use Omelettes\Quantum\Model\AbstractModel;
 
 class User extends AbstractModel
 {
+	
 	protected $fullName;
+	
 	protected $admin;
+	
+	protected $passwordResetKey;
 	
 	/**
 	 * @var Account

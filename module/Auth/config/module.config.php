@@ -60,6 +60,26 @@ return array(
 					),
 				),
 			),
+			'forgot-password' => array(
+				'type'		=> 'Zend\Mvc\Router\Http\Literal',
+				'options'	=> array(
+					'route'			=> '/forgot-password',
+					'defaults'		=> array(
+						'controller'	=> 'Auth\Controller\Auth',
+						'action'		=> 'forgot-password',
+					),
+				),
+			),
+			'password-reset' => array(
+				'type'		=> 'Zend\Mvc\Router\Http\Literal',
+				'options'	=> array(
+					'route'			=> '/password-reset',
+					'defaults'		=> array(
+						'controller'	=> 'Auth\Controller\Auth',
+						'action'		=> 'password-reset',
+					),
+				),
+			),
 		),
 	),
 	'view_helpers'	=> array(

@@ -4,8 +4,10 @@ return array(
 	'guest'		=> array(
 		'about',
 		'front',
+		'forgot-password',
 		'help',
 		'login',
+		'password-reset',
 		'plans',
 		'plans/plan',
 		'privacy',

@@ -23,7 +23,7 @@ return array(
 				//'name'					=> 'Omelettes',
 				'use_cookies'			=> true,
 				'cookie_httponly'		=> true,
-				'gc_maxlifetime'		=> 1209600,
+				//'gc_maxlifetime'		=> 1209600,
 				'remember_me_seconds'	=> 1209600,
 			),
 		),
@@ -42,5 +42,8 @@ return array(
 	'keys'				=> array(
 		'SYSTEM_SYSTEM'		=> 'deadbeef-7a69-40e7-8984-8d3de3bedc0b',
 		'SYSTEM_SIGNUP'		=> 'feedface-ad3e-4cc6-bd9c-501224e24359',
+	),
+	'email_addresses'	=> array(
+		'SYSTEM_NOREPLY'	=> 'noreply@tactilecrm.com',
 	),
 );

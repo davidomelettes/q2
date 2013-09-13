@@ -59,4 +59,31 @@ class UsersMapper extends AbstractMapper
 		$this->tableGateway->update($data, array('key' => $user->key));
 	}
 	
+	public function regeneratePasswordResetKey(User $user)
+	{
+		if (!$this->find($user->key)) {
+			throw new \Exception('User with key ' . $user->key . ' does not exist');
+		}
+		
+		$key = new Uuid();
+		$data = array('password_reset_key' => $key);
+		$this->tableGateway->update($data, array('key' => $user->key));
+		return $key;
+	}
+	
+	public function resetUserPassword(User $user)
+	{
+		if (!$this->find($user->key)) {
+			throw new \Exception('User with key ' . $user->key . ' does not exist');
+		}
+		
+		$randomPasswordChars = str_split('abcdefghkmnpqrstuvwxyz23456789');
+		shuffle($randomPasswordChars);
+		$randomPassword = implode('', array_splice($randomPasswordChars, 0, 8));
+		
+		$this->updateUserPassword($user, $randomPassword);
+		
+		return $randomPassword;
+	}
+	
 }

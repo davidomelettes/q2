@@ -5,10 +5,18 @@ namespace Auth\View\Helper;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Helper\AbstractHelper;
+use Zend\Authentication\AuthenticationService;
 
 class UserLogin extends AbstractHelper implements ServiceLocatorAwareInterface 
 {
+	/**
+	 * @var AuthenticationService
+	 */
 	protected $authService;
+	
+	/**
+	 * @var ServiceLocatorInterface
+	 */
 	protected $serviceLocator;
 	
 	public function __invoke()
@@ -20,13 +28,10 @@ class UserLogin extends AbstractHelper implements ServiceLocatorAwareInterface
 	 * Set the service locator.
 	 *
 	 * @param  ServiceLocatorInterface $serviceLocator
-	 * @return AbstractHelper
 	 */
 	public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
 	{
 		$this->serviceLocator = $serviceLocator;
-		
-		return $this;
 	}
 	
 	/**

@@ -24,23 +24,14 @@
         	<div class="navbar-header">
         		<a class="navbar-brand" href="/"><?php echo $this->translate('Quantum 2'); ?></a>
         	</div>
+        	<div class="navbar-collapse">
+        		<a class="btn btn-success navbar-btn navbar-right" href="<?php echo $this->url('signup/plan', array('plan'=>'free')); ?>">Sign up for free</a>
+        	</div>
         </nav>
         <div class="container">
-        	<?php foreach ($this->flashMessenger('success') as $message): ?>
-        	<div class="alert alert-success">
-        		<button type="button" class="close" data-dismiss="alert">&times;</button>
-        		<?php echo $this->escapeHtml($message); ?>
-        	</div>
-        	<?php endforeach; ?>
-        	<?php foreach ($this->flashMessenger('error') as $message): ?>
-        	<div class="alert alert-danger">
-        		<button type="button" class="close" data-dismiss="alert">&times;</button>
-        		<?php echo $this->escapeHtml($message); ?>
-        	</div>
-        	<?php endforeach; ?>
+        	<?php echo $this->partial('partial/flash-messenger.phtml'); ?>
         	
         	<?php echo $this->content; ?>
-            <hr>
             <footer>
                 <p>&copy; 2005 - <?php echo date('Y') ?> by <a href="http://omelett.es">Omelett.es Ltd</a>. <?php echo $this->translate('All rights reserved.') ?></p>
             </footer>

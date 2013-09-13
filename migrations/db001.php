@@ -36,6 +36,7 @@ $statement = "
 		full_name varchar NOT NULL,
 		password_hash varchar NOT NULL,
 		salt varchar NOT NULL default uuid_generate_v4(),
+		password_reset_key uuid NOT NULL default uuid_generate_v4(),
 		enabled boolean NOT NULL default true,
 		admin boolean NOT NULL default true,
 		created timestamp NOT NULL default now(),

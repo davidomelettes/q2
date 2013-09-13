@@ -16,7 +16,7 @@ class Exists extends AbstractModel
 		$valid = true;
 		
 		$result = $this->mapper->{$this->mapperMethod}($value);
-		if (empty($result)) {
+		if (count($result) < 1) {
 			$valid = false;
 			$this->error(self::ERROR_MODEL_DOES_NOT_EXIST);
 		}
