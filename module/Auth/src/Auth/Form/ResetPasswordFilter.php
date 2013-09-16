@@ -3,21 +3,10 @@
 namespace Auth\Form;
 
 use Zend\InputFilter\InputFilter;
-use Auth\Model\UsersMapper;
 use Omelettes\Quantum\Form\AbstractModelFilter;
 
-class ForgotPasswordFilter extends AbstractModelFilter
+class ResetPasswordFilter extends AbstractModelFilter
 {
-	/**
-	 * @var UsersMapper
-	 */
-	protected $usersMapper;
-	
-	public function __construct(UsersMapper $usersMapper)
-	{
-		$this->usersMapper = $usersMapper;
-	}
-	
 	public function getInputFilter()
 	{
 		if (!$this->inputFilter) {
@@ -25,22 +14,33 @@ class ForgotPasswordFilter extends AbstractModelFilter
 			$factory = $inputFilter->getFactory();
 			
 			$inputFilter->add($factory->createInput(array(
-				'name'			=> 'name',
+				'name'			=> 'password_new',
 				'required'		=> 'true',
 				'filters'		=> array(
 					array('name' => 'StringTrim'),
 				),
 				'validators'	=> array(
 					array(
-						'name'		=> 'EmailAddress',
-					),
-					array(
-						'name'		=> 'Omelettes\Quantum\Validator\Model\Exists',
+						'name'		=> 'StringLength',
 						'options'	=> array(
-							'table'		=> 'users',
-							'field'		=> 'name',
-							'mapper'	=> $this->usersMapper,
-							'method'	=> 'fetchByName',
+							'encoding'	=> 'UTF-8',
+							'min'		=> 6,
+							'max'		=> 255,
+						),
+					),
+				),
+			)));
+			$inputFilter->add($factory->createInput(array(
+				'name'			=> 'password_verify',
+				'required'		=> 'true',
+				'filters'		=> array(
+					array('name' => 'StringTrim'),
+				),
+				'validators'	=> array(
+					array(
+						'name'		=> 'Identical',
+						'options'	=> array(
+							'token'	=> 'password_new',
 						),
 					),
 				),

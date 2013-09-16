@@ -2,11 +2,14 @@
 
 namespace Auth\Model;
 
+use Zend\Authentication\AuthenticationService;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Auth\Model\User;
 use Omelettes\Quantum\Model\AbstractMapper;
 use Omelettes\Quantum\Uuid\V4 as Uuid;
-use Auth\Model\User;
 
-class UsersMapper extends AbstractMapper
+class UsersMapper extends AbstractMapper implements ServiceLocatorAwareInterface
 {
 	public function fetchAll()
 	{
@@ -53,8 +56,10 @@ class UsersMapper extends AbstractMapper
 		}
 		$salt = new Uuid();
 		$data = array(
-			'salt'				=> $salt,
-			'password_hash'		=> hash('sha256', $passwordPlaintext . $salt),
+			'salt'						=> $salt,
+			'password_hash'				=> hash('sha256', $passwordPlaintext . $salt),
+			'password_reset_key'		=> null,
+			'password_reset_requested'	=> null,
 		);
 		$this->tableGateway->update($data, array('key' => $user->key));
 	}
@@ -66,24 +71,13 @@ class UsersMapper extends AbstractMapper
 		}
 		
 		$key = new Uuid();
-		$data = array('password_reset_key' => $key);
+		$data = array(
+			'password_reset_key'		=> $key,
+			'password_reset_requested'	=> 'now()',
+		);
 		$this->tableGateway->update($data, array('key' => $user->key));
-		return $key;
-	}
-	
-	public function resetUserPassword(User $user)
-	{
-		if (!$this->find($user->key)) {
-			throw new \Exception('User with key ' . $user->key . ' does not exist');
-		}
 		
-		$randomPasswordChars = str_split('abcdefghkmnpqrstuvwxyz23456789');
-		shuffle($randomPasswordChars);
-		$randomPassword = implode('', array_splice($randomPasswordChars, 0, 8));
-		
-		$this->updateUserPassword($user, $randomPassword);
-		
-		return $randomPassword;
+		return (string)$key;
 	}
 	
 }

@@ -2,6 +2,7 @@
 
 namespace Auth\Controller;
 
+use Zend\Authentication\Adapter\DbTable as DbTableAuthAdapter;
 use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Auth\Form\ForgotPasswordFilter;
@@ -112,7 +113,7 @@ class AuthController extends AbstractActionController
 	public function getResetPasswordFilter()
 	{
 		if (!$this->resetPasswordFilter) {
-			$resetPasswordFilter = $this->getServiceLocator()->get('Auth\Form\ResetPasswordFilter');
+			$resetPasswordFilter = new ResetPasswordFilter();
 			$this->resetPasswordFilter = $resetPasswordFilter;
 		}
 	
@@ -131,7 +132,7 @@ class AuthController extends AbstractActionController
 	public function getforgotPasswordFilter()
 	{
 		if (!$this->forgotPasswordFilter) {
-			$forgotPasswordFilter = new ForgotPasswordFilter();
+			$forgotPasswordFilter = $this->getServiceLocator()->get('Auth\Form\ForgotPasswordFilter');
 			$this->forgotPasswordFilter = $forgotPasswordFilter;
 		}
 	
@@ -206,8 +207,8 @@ class AuthController extends AbstractActionController
 			$this->flashMessenger()->addSuccessMessage('You are already logged in');
 			return $this->redirect()->toRoute('home');
 		}
-		$form = $this->getForgotPasswordForm();
 		
+		$form = $this->getForgotPasswordForm();
 		$request = $this->getRequest();
 		
 		if ($request->isPost()) {
@@ -230,23 +231,23 @@ class AuthController extends AbstractActionController
 	
 	public function sendForgotPasswordEmail($emailAddress, $passwordResetKey)
 	{
-		if (count($this->getUsersMapper()->fetchByName($emailAddress)) < 1) {
-			return false;
+		if (false === ($user = $this->getUsersMapper()->findByName($emailAddress))) {
+			throw new \Exception('Failed to find user by name: ' . $emailAddress);
 		}
 		$config = $this->getServiceLocator()->get('config');
 		
-		$variables = array('passwordResetKey' => $passwordResetKey);
+		$variables = array(
+			'user_key'				=> $user->key,
+			'password_reset_key'	=> $passwordResetKey,
+		);
 		
 		$mailer = $this->getServiceLocator()->get('Mailer');
-		$mailer->setHtmlLayout('mail/layout/html.phtml');
-		$mailer->setHtmlTemplate('mail/html/password_reset.phtml', $variables);
-		$mailer->setTextLayout('mail/layout/text.phtml');
-		$mailer->setTextTemplate('mail/password_reset.phtml', $variables);
+		$mailer->setHtmlTemplate('mail/html/reset-password.phtml', $variables);
+		$mailer->setTextTemplate('mail/reset-password.phtml', $variables);
 		
 		$mailer->send(
 			'Subject Text',
-			$emailAddress,
-			$config['email_addresses']['SYSTEM_NOREPLY']
+			$emailAddress
 		);
 	}
 	
@@ -257,8 +258,27 @@ class AuthController extends AbstractActionController
 			$this->flashMessenger()->addSuccessMessage('You are already logged in');
 			return $this->redirect()->toRoute('home');
 		}
-		$form = $this->getResetPasswordForm();
 		
+		// Create a single-use authentication adapter for authorising against the password reset key
+		$dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+		$dbTableResetPasswordAuthAdapter = new DbTableAuthAdapter(
+			$dbAdapter,
+			'users',
+			'key',
+			'password_reset_key',
+			"password_reset_requested IS NOT NULL AND password_reset_requested > (now() - interval '1 day') password_reset_key IS NOT NULL AND acl_role = 'user'"
+		);
+		$dbTableResetPasswordAuthAdapter->setIdentity($this->params('user_key'))
+			->setCredential($this->params('password_reset_key'));
+		$result = $dbTableResetPasswordAuthAdapter->authenticate();
+		if (!$result->isValid()) {
+			$this->flashMessenger()->addErrorMessage('Invalid user and/or password reset key');
+			return $this->redirect()->toRoute('login');
+		}
+		$passwordResetUser = new User((array)$dbTableResetPasswordAuthAdapter->getResultRowObject());
+		
+		// User has verified password reset key, allow form to be displayed
+		$form = $this->getResetPasswordForm();
 		$request = $this->getRequest();
 		
 		if ($request->isPost()) {
@@ -266,15 +286,17 @@ class AuthController extends AbstractActionController
 			$form->setData($request->getPost());
 		
 			if ($form->isValid()) {
-				// TODO: Establish the user for which we are currently resetting the password
-				$this->getUsersMapper()->updateUserPassword($this->getAuthService()->getIdentity(), $form->getInputFilter()->getValue('password_new'));
+				// We can now change the password
+				$this->getUsersMapper()->updateUserPassword($passwordResetUser, $form->getInputFilter()->getValue('password_new'));
 				$this->flashMessenger()->addSuccessMessage('Your password has been updated');
-				return $this->redirect('login');
+				return $this->redirect()->toRoute('login');
 			}
 		}
 		
 		return array(
-			'resetPasswordForm' => $form,
+			'form'					=> $form,
+			'user_key'				=> $passwordResetUser->key,
+			'password_reset_key'	=> $this->params('password_reset_key'),
 		);
 	}
 	

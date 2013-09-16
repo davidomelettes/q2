@@ -46,4 +46,7 @@ return array(
 	'email_addresses'	=> array(
 		'SYSTEM_NOREPLY'	=> 'noreply@tactilecrm.com',
 	),
+	'view_manager'		=> array(
+		'base_path'			=> 'tactilecrm.com',
+	),
 );

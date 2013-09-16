@@ -70,13 +70,17 @@ return array(
 					),
 				),
 			),
-			'password-reset' => array(
-				'type'		=> 'Zend\Mvc\Router\Http\Literal',
+			'reset-password' => array(
+				'type'		=> 'Zend\Mvc\Router\Http\Segment',
 				'options'	=> array(
-					'route'			=> '/password-reset',
+					'route'			=> '/reset-password/:user_key/:password_reset_key',
 					'defaults'		=> array(
 						'controller'	=> 'Auth\Controller\Auth',
-						'action'		=> 'password-reset',
+						'action'		=> 'reset-password',
+					),
+					'constraints'	=> array(
+						'user_key'				=> Omelettes\Quantum\Validator\Uuid::UUID_REGEX_PATTERN,
+						'passsword_reset_key'	=> Omelettes\Quantum\Validator\Uuid::UUID_REGEX_PATTERN,
 					),
 				),
 			),

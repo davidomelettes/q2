@@ -56,7 +56,12 @@ class Module
 					return $sessionSaveHandler;
 				},
 				'Omelettes\Quantum\Mailer'		=> function ($sm) {
+					$config = $sm->get('config');
 					$mailer = new Mailer();
+					$mailer->setTextLayout('mail/layout/text.phtml')
+						->setHtmlLayout('mail/layout/html.phtml')
+						->setFromAddress($config['email_addresses']['SYSTEM_NOREPLY'])
+						->setFromName('Tactile CRM');
 					return $mailer;
 				},
 				'Zend\Session\SessionManager'	=> function ($sm) {

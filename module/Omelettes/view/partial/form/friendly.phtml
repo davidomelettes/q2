@@ -2,7 +2,7 @@
 
 $form = $this->form;
 $form->setAttributes(array(
-	'action'	=> $this->url(),
+	'action'	=> $this->url(null, array(), array(), true),
 	'class'		=> $form->getAttribute('name') . ' form-friendly',
 ));
 $form->prepare();

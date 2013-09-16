@@ -9,8 +9,8 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Mvc\MvcEvent;
 use Zend\Permissions\Acl;
+use Auth\Form\ForgotPasswordFilter;
 use Auth\Form\LoginFilter;
-use Auth\Form\ResetPasswordFilter;
 use Auth\Model\Account;
 use Auth\Model\AccountsMapper;
 use Auth\Model\AuthStorage;
@@ -87,8 +87,8 @@ class Module
 					$filter = new LoginFilter();
 					return $filter;
 				},
-				'Auth\Form\ResetPasswordFilter'		=> function($sm) {
-					$filter = new ResetPasswordFilter($sm->get('Auth\Model\UsersMapper'));
+				'Auth\Form\ForgotPasswordFilter'		=> function($sm) {
+					$filter = new ForgotPasswordFilter($sm->get('Auth\Model\UsersMapper'));
 					return $filter;
 				},
 				'AclService'				=> function($sm) {

@@ -55,9 +55,37 @@ class Mailer implements ServiceLocatorAwareInterface
 	 */
 	protected $encoding = 'UTF-8';
 	
+	/**
+	 * Email address the message is sent from
+	 * @var string
+	 */
+	protected $fromAddress;
+	
+	/**
+	 * Friendly name for labelling the from address
+	 * @var string
+	 */
+	protected $fromName;
+	
 	public function setEncoding($encoding)
 	{
 		$this->encoding = $encoding;
+		
+		return $this;
+	}
+	
+	public function setFromAddress($address)
+	{
+		$this->fromAddress = $address;
+		
+		return $this;
+	}
+	
+	public function setFromName($name)
+	{
+		$this->fromName = $name;
+		
+		return $this;
 	}
 	
 	/**
@@ -83,9 +111,7 @@ class Mailer implements ServiceLocatorAwareInterface
 	public function getView()
 	{
 		if (!$this->view) {
-			$view = new PhpRenderer();
-			$resolver = $this->getServiceLocator()->get('ViewResolver');
-			$view->setResolver($resolver);
+			$view = $this->getServiceLocator()->get('Zend\View\Renderer\RendererInterface');
 			$this->view = $view;
 		}
 		
@@ -164,11 +190,17 @@ class Mailer implements ServiceLocatorAwareInterface
 		return $this->lastMessage;
 	}
 	
-	public function send($subject, $to, $from)
+	public function send($subject, $to)
 	{
 		if (!$this->getTextTemplateView()) {
 			throw new \Exception('Missing text template');
 		}
+		if (!$this->fromAddress) {
+			throw new \Exception('Missing From address');
+		}
+		
+		$message = new ZendMail\Message();
+		$body = new MimeMessage();
 		
 		$textBody = $this->getView()->render($this->getTextTemplateView());
 		if ($this->getTextLayoutView()) {
@@ -187,16 +219,15 @@ class Mailer implements ServiceLocatorAwareInterface
 			$htmlPart->type = MimeType::TYPE_HTML;
 			$parts[] = $htmlPart;
 		}
-		
-		$body = new MimeMessage();
 		$body->setParts($parts);
 		
-		$message = new ZendMail\Message();
 		$message->setSubject($subject)
 			->setTo($to)
-			->setFrom($from)
+			->setFrom($this->fromAddress)
 			->setEncoding($this->encoding)
 			->setBody($body);
+		
+		$message->getHeaders()->get('content-type')->setType(MimeType::MULTIPART_ALTERNATIVE);
 		
 		$transport = new ZendMail\Transport\Sendmail();
 		$transport->send($message);

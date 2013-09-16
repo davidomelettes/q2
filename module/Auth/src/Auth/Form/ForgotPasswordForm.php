@@ -8,7 +8,7 @@ class ForgotPasswordForm extends AbstractForm
 {
 	public function __construct($name = null)
 	{
-		parent::__construct('form-reset-password');
+		parent::__construct('form-forgot-password');
 		
 		$this->addNameElement('Email Address');
 		$this->get('name')->setAttribute('placeholder', 'Email Address');
