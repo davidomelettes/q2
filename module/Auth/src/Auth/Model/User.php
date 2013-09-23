@@ -6,12 +6,11 @@ use Omelettes\Quantum\Model\AbstractModel;
 
 class User extends AbstractModel
 {
-	
 	protected $fullName;
 	
 	protected $admin;
 	
-	protected $passwordResetKey;
+	protected $enabled;
 	
 	/**
 	 * @var Account
@@ -25,6 +24,7 @@ class User extends AbstractModel
 		parent::exchangeArray($data);
 		$this->setFullName(isset($data['full_name']) ? $data['full_name'] : null);
 		$this->setAdmin(isset($data['admin']) ? $data['admin'] : null);
+		$this->setEnabled(isset($data['enabled']) ? $data['enabled'] : null);
 		$this->setAclRole(isset($data['acl_role']) ? $data['acl_role'] : null);
 		$this->setAccount(isset($data['account_key']) ? $data['account_key'] : null);
 		
@@ -36,6 +36,7 @@ class User extends AbstractModel
 		return array_merge(parent::getArrayCopy(), array(
 			'full_name'			=> $this->fullName,
 			'admin'				=> $this->admin,
+			'enabled'			=> $this->enabled,
 			'acl_role'			=> $this->aclRole,
 			'account_key'		=> $this->account,
 		));
@@ -63,6 +64,18 @@ class User extends AbstractModel
 	public function getAdmin()
 	{
 		return $this->admin;
+	}
+	
+	public function setEnabled($enabled)
+	{
+		$this->enabled = (boolean)$enabled;
+	
+		return $this;
+	}
+	
+	public function getEnabled()
+	{
+		return $this->enabled;
 	}
 	
 	public function setAclRole($role)

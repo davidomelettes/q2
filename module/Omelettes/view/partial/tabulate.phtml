@@ -1,0 +1,15 @@
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<?php $headings = $this->mock->getTableHeadings(); ?>
+			<?php foreach ($headings as $label => $property): ?>
+			<th><?php echo $this->escapehtml($label); ?></th>
+			<?php endforeach; ?>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($this->data as $datum): ?>
+			<?php echo $this->partial($this->mock->getTableRowTemplate(), array('item' => $datum)); ?>
+		<?php endforeach; ?>
+	</tbody>
+</table>

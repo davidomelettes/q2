@@ -11,4 +11,10 @@ return array(
 			__DIR__ . '/../view',
 		),
 	),
+	'view_helpers'	=> array(
+		'invokables'	=> array(
+			'tabulate'		=> 'Omelettes\Quantum\View\Helper\Tabulate',
+			'prettyBoolean'	=> 'Omelettes\Quantum\View\Helper\PrettyBoolean',
+		),
+	),
 );

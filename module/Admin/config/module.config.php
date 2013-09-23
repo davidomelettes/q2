@@ -19,6 +19,9 @@ return array(
 		'template_path_stack'		=> array(
 			__DIR__ . '/../view',
 		),
+		'template_map'				=> array(
+			'tabulate/user'		=>  __DIR__ . '/../view/partial/tabulate/user.phtml',
+		),
 	),
 	'controllers' => array(
 		'invokables' => array(

@@ -1,0 +1,18 @@
+<tr>
+	<td>
+		<!-- name -->
+		<a href="<?php echo $this->url('admin/default', array('controller'=>'users','action'=>'view','key'=>$this->item->key)); ?>"><?php echo $this->escapehtml($this->item->name); ?></a>
+	</td>
+	<td>
+		<!-- fullName -->
+		<?php echo $this->escapehtml($this->item->fullName); ?>
+	</td>
+	<td>
+		<!-- admin -->
+		<?php echo $this->prettyBoolean($this->item->admin); ?>
+	</td>
+	<td>
+		<!-- enabled -->
+		<?php echo $this->prettyBoolean($this->item->enabled); ?>
+	</td>
+</tr>

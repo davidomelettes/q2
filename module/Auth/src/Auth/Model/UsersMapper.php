@@ -3,6 +3,7 @@
 namespace Auth\Model;
 
 use Zend\Authentication\AuthenticationService;
+use Zend\Db\Sql\Select;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Auth\Model\User;
@@ -13,7 +14,10 @@ class UsersMapper extends AbstractMapper implements ServiceLocatorAwareInterface
 {
 	public function fetchAll()
 	{
-		$resultSet = $this->tableGateway->select();
+		$where = array(
+			'acl_role'		=> 'user',
+		);
+		$resultSet = $this->tableGateway->select($where);
 		
 		return $resultSet;
 	}
@@ -28,6 +32,7 @@ class UsersMapper extends AbstractMapper implements ServiceLocatorAwareInterface
 			'updated_by'		=> $config['keys']['SYSTEM_SIGNUP'],
 			'full_name'			=> $user->fullName,
 			'admin'				=> 'true',
+			'enabled'			=> 'true',
 			'acl_role'			=> 'user',
 			'account_key'		=> $user->account,
 		);
